@@ -77,5 +77,6 @@ used in simple single line function
  It is a type of data structure and can store values of different data types
  It is mutable data structure
  Methods - append(),insert(),sort(),reverse()
- Loops using list are used to get the data from large records quickly
+ Loops using list are used to get the data from large records quickly.
  
+
