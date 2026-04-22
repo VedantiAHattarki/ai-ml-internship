@@ -1,4 +1,5 @@
 Python basics
+
 1.Variables:
 -Variables are the names given to the memory location or data storage containers is known as variables 
 -Identifiers are the names given to variables, functions, classes, etc.
@@ -73,10 +74,20 @@ used in simple single line function
 -Strings - sequence of characters written in single, double, triple quotes
  (strings are immutable)
  Formatting in strings - creating dynamic strings i.e adding variables and values in strings 2 ways    - format(), f-strings
+
 -List -  A list is a collection of multiple values stored in a single variable.
  It is a type of data structure and can store values of different data types
  It is mutable data structure
  Methods - append(),insert(),sort(),reverse()
  Loops using list are used to get the data from large records quickly.
- 
 
+-Tuples - Tuples - A tuple is a collection of multiple values stored in a single variable. 
+It is a type of data structure and can store values of different data types and is immutable data structure. Methods of tuples are index, count etc
+
+-Dictionary - A dictionary is a collection of key-value pairs stored in a single variable.
+It is a type of data structure and can store values of different data types and is mutable data structure and unordered
+Methods in dictionary are keys(),values(),items(),get(),update().
+
+-Sets - A set is a collection of unique values stored in a single variable.
+It is a type of data structure and can store values of different data types and is mutable but elements in set are immutable and is unordered
+Methods in sets are add(),remove(),discard(),pop(),clear().

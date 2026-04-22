@@ -228,3 +228,45 @@ my_list.sort()  # Sorting the list
 print(my_list)
 my_list.reverse()  # Reversing the list     
 print(my_list)
+
+# 12. TUPLES, DICTIONARY, SETS
+
+#problem : given a list of tuples with info(name,subject):
+#list all unique course
+#list of studentes enrolled in english
+#create dictionary (student, set of course)
+
+info = [
+    ("john","english"),
+    ("jane","mathematics"),
+    ("jave","english"),
+    ("jane","english"),
+    ("bren","artificial intelligence"),
+    ]
+
+unique_courses = set()
+for tup in info:
+    #print(tup[0]) #name
+    print(tup[1]) #subject
+    unique_courses.add(tup[1])
+print(unique_courses)
+
+enrolled_in_english = []
+for name,course in info:
+    if course == "english":
+        enrolled_in_english.append(name)
+print("Students enrolled in English:", enrolled_in_english)
+
+
+dict_info = {}
+for name,course in info:
+    if(dict_info.get(name) ==  None):
+        dict_info.update({name: set()})
+        dict_info[name].add(course)
+    else:
+        dict_info[name].add(course)
+
+print(dict_info)
+
+
+
