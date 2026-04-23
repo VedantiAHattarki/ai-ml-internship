@@ -12,3 +12,8 @@ Topics covered:
 -Functions (built-in, user-defined, lambda)
 -Data Structures (Strings, Lists, Tuples, Dictionaries, Sets)
 
+Task1A : Program to scan digital PDFs and extract the content using:
+-Python
+-Pytesseract
+-Poppler
+-pdf2image 
