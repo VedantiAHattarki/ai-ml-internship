@@ -1,0 +1,946 @@
+
+--- Page 1 ---
+Artificial Intelligence in Radiotherapy 95
+
+With the advent of RT, executing an appropriate technology with smited time,
+budget, and high clinical outcomes would be a challenging task for radiation oncologists and medical physicists. Axtificial intelligence (AI) is evolving as the most
+popular technology in academics, medical institutions, and industry in this digital
+era of the fourth industrial revolution. Therefore, the future of RT should be the
+introduction of AI into clinical practice and hence this chapter discusses the umportance and developments of AI at various processes of RT based on the information collected from articles published by researchers.
+
+6.2 IMPORTANCE OF ARTIFICIAL INTELLIGENCE (Al)
+IN RADIOTHERAPY
+
+AI systems can assist and enhance the competence of RT workflow through the
+developments in ML algorithms. Generally, the RT workflow consists of many
+steps, as given in Figure 6.1.
+
+Immobilization: Desired immobilization devices are designed to avoid the
+movement of patients during the treatment. Image acquisition; The most commonly
+used modality for image acquisition is CT since the algorithms for dose calculation
+require electronic density data. Even though MRI has excellent features for soft
+tissue imaging, it is not possible to transfer CT data to MRI and PET CT data to
+PET MRI due to electron density dependency of CT to cosrect attenuation. To
+provide a suitable solution to this problem, various methods like learning methods,
+sparse coding methods, atlas methods, etc., have been developed to utilize the data
+acquired from MRI to make a CT. This is termed synthetic CT or sCT. Out of these
+methods for sCT, a type of AI method namely deep embedding convolutional
+neural network (DECNN) can produce images of higher resolution with lesser artifacts in a lesser time and more efficiently. Hence, Al-based methods have high
+potential in the future to generate sCT from MRI data with limited electron density
+information to generate a treatment plan. The sCT can also be applied in the image
+segmentation process with lesser error because sCT data can be fused accurately
+and easily with MRI data.
+
+Image segmentation: Image segmentation and contouring is an important step in
+RT planning. But, it is a time-consuming process and depends on the expertise of
+the radiation oncologist and medical physicist. Based on this, auto segmentation
+algorithms have been developed to increase the speed of the process and to reduce
+inter-expert variability. There are many algorithms and approaches available for
+auto segmentation. Originally, they applied to contour OAR that can be identified
+by tissue density. Then, auto-contouring methods were merged with atlas to contour
+normal tissues three-dimensionally. Recently, Al-based ML and DL methods like
+deep dilated convolutional neural networks (DDCNN) are in widespread ‘se to
+perform many tasks. Researchers confirmed that DL methods have performed better
+than manual contouring with auto segmentation for the esophagus and spinal cord
+by consuming 79% of the lesser time and reducing Intra and inter-observer changeability. Still, it requires further improvements to make it suitable for all cases,
+
+To measure the segmentation accuracy and consistency of an algorithm, the Dice
+similarity coefficient (OSC) was used. Even though, DDCNN can contour many
+
+--- Page 2 ---
+96 Artificial intelligence Theory, Models, and Applications
+
+immobilizatio Immobilization
+
+al
+es
+
+CT, MRI, PET etc.,
+
+Primary image (CT) registration
+against secondary (MRi &PET)
+
+Delineation of PTV & OAR
+
+Treatment planning
+
+fl
+i
+
+Pian
+
+aera penn |
+
+2D portal imaging or CBCT verification
+
+Dose delivery by 2D, 3D, IMRT,
+VMAT, etc, techniques
+
+Follow up using CT, PET & MR&
+
+FIGURE 6.1 Radiotherapy workflow,
+
+
+--- Page 3 ---
+Artificial Intelligence in Radiotherapy 97
+
+organs such as CTV, bladder, left and right femoral heads, colon and intestine with
+high DSC value and low test time, it shows high uncertainties while segmenting
+structures like submandibular glands, optic chiasm, etc. Due to the continuous research activities on Al-based toois like CNN, the auto segmentation quality will be
+improved in the future by incorporating more number of high quality and less
+variable data as input to train the algorithms. Also, the anatomical knowledge and
+experience of the users are necessary to monitor the outcome of the algorithm.
+Despite many developments in AI, technology can only assist the users in the
+contouring process of RT.
+
+Image registration: The next step of RT workflow is to spatially align multiple
+images of the same scene acquired at different viewpoints and times concerning an
+image. This process is termed image registration. It uses a mathematical transformation to align an image with the reference image. Even though, there are many
+registration methods available commercially, rigid techniques and intensity-based
+methods are commonly used in RT. Based on a survey, researchers confirmed that
+DL-based image registration techniques will make the image registration process
+more user-friendly and easier than the earlier one.
+
+Treatment planning: It is a tedious process of optimizing dosimetric objectives
+using computer-based algorithms before delivering radiation to patients. It is a timeconsuming and laborious step that involves a trial and error concept. AI technology
+has been progressed to get more efficient and rapid planning process as given below:
+
+!. Voxel-based dose prediction and dose mimicking methods were used to plan
+head and neck RT.
+
+2. ML methods and multi-patient atlas selection were applied to calculate dose
+distributions per voxel to generate automated RT planning.
+
+3. Al-based methods have been applied with maximum accuracy in the shortest
+time because of their rapid auto segmentation and image registration process
+to make it suitable for adaptive RT planning.
+
+4. Knowledge-based ML algorithms have been used to generate a dose-volume
+histogram (DVH) of a given pian with a provision to perform inverse planning in less time.
+
+5. AI algorithms can include patient-specific parameters such as sex, age, geographical variations, genetic makeup, etc., in addition to the ability of conventional algorithms.
+
+6. Another development of AI in RT is personalizing the dose detivery to a
+patient by incorporating dosimetric, clinicat, and biological information of the
+patient and accessing the treatment outcome. It wil? enhance tumor control
+and minimize the toxicity of the treatment.
+
+7. In the future, AI technology can select the patient who can be benefited from
+RT or exclude the unsuitable patient by measuring the radio-sensitivity of the
+tumor based on radio genomic assays like PORTOS.
+
+RT dose optimization is a part of the treatment planning procedure where Al-based
+approaches have incorporated hundreds of prior plans of multiple diseases to improve the efficiency and reproducibility of a plan, Records show that this approach
+
+--- Page 4 ---
+98 Artificial Intelligence Theory, Models, and Applications
+
+can save approximately 80% of the time and can be applied in multiple clinical
+conditions that include SBRT planning, DVH data analysis, etc. However, Al-based
+planning is not completely automated now as it needs expert's supervision to ensure
+the treatment plan.
+
+Beam delivery methods: While delivering the planned dose throughout the full
+course of treatment, complications associated with patient movement and biological
+movement of the tumor and internal organs within a fraction and in between
+fractions became a challengeable task. However, Al-based techniques can decrease
+the uncertainty related to patient motion. Researchers have demonstrated a softrobot actuator to treat head and neck cancers without any immobilization device
+that uses a position-sensitive soft robot to consider the movement of a patient. The
+uncertainty that arises due to internal tumor motion can also be tracked with the
+support of AI. There is a time lag in conventional techniques that is caused by a
+delay in recording the movement and Correcting it. This time lag can be avoided by
+Al-based tumor tracking systems where various breathing patterns and breathing
+cycles of many patients are incorporated. Intra and inter-fraction fuzzy deep
+learning (IIFDL) algorithms have been developed to predict intra- and interfractional variation by incorporating breath pattern data with lesser computation
+time in the order of 1 to 2 ms.
+
+Quality assurance (QA): Generally, advanced RT QA workflow requires a
+complete evaluation of the treatment plan of every patient without expecting any
+result. Now a day, Al-based techniques have been implemented to predict the
+passing rate of the advanced QA procedutes, to predict error in image-guided
+modalities, and to assess the performance of Linac. Although AI algorithms have
+been applied for preventive maintenance of machine data, they may help to avoid
+technical failures and reduce machine downtime. Therefore, they can enhance the
+work efficiency of the department and worker's satisfaction even though they add
+additional cost for the algorithm. However, additional quality assurance procedures
+for the inherent Al-based algorithms and processes should also be performed
+periodically.
+
+Clinical decision support and prediction of treatment outcome: It has been evolved
+as another area of interest to apply the power of AI with the principle of using the
+ayailable treatment and outcome-based data and models to give efficient and timely
+recommendations and directions. A few of its benefits are: (1) to assist radiation
+oncologists to inform their decision to the patient about his/her treatment modality,
+schedule, basic dosimetric information, ¢tc., (2) integrate dosimetric data with diagnostic imaging, genomic, and other medical data to build an outcome-based model,
+and (3) radiomics data will be used in the future to predict the risks associated with the
+treatment before initiating it. However, its accuracy and scope are limited because of
+the lack of outcome data of curative treatments, data sharing among institutions, and
+standardized processes. Therefore, many approaches such as OncoSpace, EuroCAT,
+MAASTRO, LAMBDA-RAD, and models such as ontologies, HL7~FHIR, etc., are in
+the process of getting acceptance (Reid et al., 2018).
+
+--- Page 5 ---
+Artificial Intelligence in Radiotherapy 99
+
+6.3 Al TOOLS FOR AUTOMATED TREATMENT PLANNING (ATP)
+
+As discussed in the previous section, many AI algorithms have been progressed to
+improve the efficiency of the treatment planning system (TPS), for ATP, and for optimizing the dosimetry. In addition to the automatic nature of ATP systems, ATP can
+also reduce treatment planning time, error, and enhance the plan's consistency and
+efficiency. This section discusses the most commonly used AI tools for ATP, AT applications and advancements in ATP, AI challenges and research guidance in ATP, and
+collaboration and regulations to implement AI in clinics (Chunhao et al., 2019).
+
+6.3.1 Present ATP TecHNIQueSs
+
+Based on the effect of RT workflow in clinical practice, the present ATP techniques
+are classified into three categories. They are (1) Auto Rule Implementation and
+Reasoning (ARIR), (2) simulation of previous Knowledge into clinics, and (3)
+
+Generally, basic TPS parameters are implemented based on the guidelines and
+mules of individual institutions and expertise of the medical physicists which are
+simple adjustments. But, the reasoning of the TPS process needs more knowledge
+and complexity too but that can be simulated by binary logics like “if-then.”
+Therefore, the ARIR technique can be used to reduce the need for manpower involvement to generate a plan most commonly while performing repeated procedures. Vendots of various TPS have brought ARIR based solutions for scripting
+functions based on the input given by the user. These special functions can enable
+users to develop automatic programs as per their clinical need and research includes
+beam setup, dose calculation, DVH optimization, etc. Many researchers have been
+analyzing the automation capability of the ARIR technique in IMRT and VMAT
+treatment planning developed by various vendors. Recently, the ARIR technique
+has also been used with ML algorithms in the case of pelvis and breast TPS.
+
+An approach of simulating previous knowledge of similar good cases can
+naturally enhance the efficiency of manual planning. That is, parameters in earlier
+cases such as beam alignment, and DVH components are inserted into the treatment
+planning procedure or considered as reference parameters to decide for a present
+case. Based on this, scientists have introduced statistical models to find important
+features from previous high-quality cases using knowledge and clinical decision.
+When using those features as input, those models can improve the efficiency of the
+treatment planning. This approach is called knowledge-based planning (KBP).
+Many analyses have been performed with DVH based KBP as they improve the
+quality of the plan. Recently, Varian has developed the DVH-based KBP as
+Rapidplan in Eclipse TPS. However, its usage is limited due to deficiency of spatial
+data, and the complexity in dealing with rare OARs and targets.
+
+In the case of inverse planning optimization using DVH, 2 cost function is
+generally determined to reduce the problem in the planning process. This function
+
+the data collected from all regions of interest as a single dosimetrically
+weighted total of the penalty. Then, the compromise between the OARs and targets
+are marked by a coefficient of dosimetric criterion. If the preference of the user is
+
+--- Page 6 ---
+100 Artificial Intelligence Theory, Models, and Applications
+
+modified in terms of its dosimetric parameters while evaluating the plan, then the
+original plan needs to be optimized once again which limits the usage of DVHbased approach. However, its alternative approach would be a time-consuming one.
+Therefore, MCO was introduced in the inverse planning procedure that wil I generate multiple model plans at a time for evaluation. Here, each plan is optimized a
+per a single DVH parameter for maximum sparing of normal structures without
+compromising the dose to the target. If the user modifies the dose distribution, the
+corresponding plan will be generated immediately without optimizing the plan once
+again. The MCO based approach is available in RayStation TPS and Eclipse TPS.
+
+6.3.2 Al Appuications, ADVANCEMENTS, AND RESEARCH
+Guipance in ATP
+
+ATP along with a potential AI tool will be an efficient and effective system in the
+future with less manpower. A few of the Al applications in ATP are as follows:
+
+1. AI tools can be instrumental to perform all reasoning logics and manual
+procedures in RT by incorporating the complete anatomical details of the
+patient.
+
+2. AI can decide the RT parameters such as dose Prescription, beam delivery,
+etc. instead of a medical physicist.
+
+3. The implementation of AI in routine clinical practice will reduce the number
+of manpower and hence the saved manpower can be utilized to perform other
+tasks that require human involvement.
+
+A few of the AI advancements in ATP are as follows:
+
+1. KBP approach in ATP was developed very long back. Recently, researchers
+demonstrated its clinical applicability in IMRT to treat prostate cancer using
+two different algorithms namely weighted K-nearest neighbor and multinomial logistic regression algorithm and it is confirmed that both of them
+perform well.
+
+2. Researchers confirmed that the KBP approach with the support vector regression model is more suitable for rectum and bladder DVH prediction than
+the RapidPlan model.
+
+3. When the 3D dose distribution of a plan is predicted accurately, it will improve
+the quality and efficiency of manual TPS and can simplify the decision-making
+process, Also, it can be utilized to make the ATP workflow completely automatic without plan optimization. Researchers developed Al-based models such
+as the ANN-based dose model and U-net to predict the 3D dose distribution in
+advanced modalities (SBRT, IMRT, etc.) accurately. Fully convolutional
+neural network-based models such as DoseNet, DenseNet, and ResNet were
+also introduced to predict 3D dose distribution with lesser network redundancy
+
+4. U-net models were introduced to perform the image segmentation process by
+maintaining the original dimension of the image that can avoid the feature
+
+--- Page 7 ---
+Artificial Intelligence in Radiotherapy 101
+
+extraction process and reduce the need for data interpretation while performing the KBP process.
+
+5. The success of 3D dose distribution prediction is converting its parameters
+into a real treatment plan to make it a deliverable plan. Researchers proposed
+various frameworks such as KBP workflow and ResNet-based framework for
+auto planning to generate an actual plan.
+
+A few of the research guides for effective implementation of AI in ATP are as
+follows:
+
+1. As discussed in the previous chapter, the developments in deep CNN-based
+algorithms are potential research areas for Al-based applications in medical
+imaging. In parailel to this research, investigation to improve the efficiency
+and accuracy of 3D dose prediction is a potential area of focus in the future.
+Therefore, DVH-based pian optimization may be replaced by a plan generation algorithm through image reconstruction when the predicted 3D dose
+data is considered as reference data.
+
+2. Another interesting area of research is predicting the RT plan parameters
+directly to generate plans automatically. It may be possible by using CNNbased algorithms to predict the dose parameters like 2D fluence data and
+convert them into equivalent images.
+
+3. More focus on the decision-making approach may enable the researchers to
+implement the fully automatic ATP workflow into routine clinical practice
+without human involvement.
+
+4, Human reasoning approaches can be simulated by implementing reinforcement learning from an easy case with a lesser number of cases and extend the
+same to the complete ATP workflow on large scale.
+
+5. Al-based Generative Adversarial Network (GAN) algorithms have already
+been implemented for diagnosis, image segmentation and to predict 3D dose
+distribution in RT. GAN can be investigated in the future to model the
+treatment planning decision-making process.
+
+6.3.3 Al CHALLENGES 1s ATP
+
+‘The major problem with the current RT planning process is its compiexity since each
+step of its plan generation needs to be assessed after the dose calculation process is
+Therefore, the ATP workflow modeling became expensive on simulation
+aspects when compared to other applications. However, its computational cost and
+complexity can be reduced when the decision-making processes are simplified by
+i ing basic rules in ATP workflow, This is also possible by integrating the
+basic ules followed in the manual treatment planning process such as clinical preference, institutional guidance, etc., using simple logics (¢.g., If-else), related variables, or physical concepts like the effect of built up regions. Also, these challenges
+can be nullified by the team efforts of oncology personnel and researchers,
+ATP applications became a challengeable task because of limited data set caused
+by lesser patient involvement, variation in data acquisition, heterogencous imaging
+
+--- Page 8 ---
+102 Artificial Intelligence Theory, Models, and Applications
+
+data, insufficient infrastracture, etc. It triggers the need for separating each data set
+into three subsets namely test data, validation data, and training data. The test data
+Set is used to test the performance of the model that was trained using validation and
+training data sets. However, this three-part data method may also critical when we
+use it for highly complex Al methods. Also, the KBP-approach-based ATP algorithms shows low performance in more complex and advanced cases due to overfitting and simulation error associated with smal) sample size.
+
+Such issues associated with limited sample size can be handled by various apProaches such as transfer learning, data augmentation, and the addition of features
+into model learning. The transfer learning approach creates a model algorithm using
+Small data sets to adjust a model that was trained by big data sets from a different
+application. The data augmentation approach increases the number of data sets by
+adding a modified form of its original data. In the third approach, a mode} fearning
+that incorporated the features selected from Previous cases is considered as rePresentative statistics where extra operations can be included to remove overiitting.
+Unfortunately, this approach can be successfully executed by users with sufficient
+computational skill to handle AI algorithms. Hence, this area requires further reSearch towards the development and adaptation of new methods to tackle the issues
+related to small data size.
+
+To introduce the Al-based ATP techniques into regular clinical applications, it is
+essential to validate them in terms of their efficiency and quality. Despite that,
+medical physicists should play a major role to follow the RT workflow to ensure the
+quality and safety of a plan. To validate and generalize the AI techniques successfully, they require more number of patients in each group of disease, data types,
+imaging modalities, RT plan, clinical results, etc. It can be achieved in the future
+through collaboration among institutions by making guidelines for the RT plan
+generation.
+
+number of recent plans can be increased by using the current ATP techniques in
+clinics that will enable future research activities, Since every step of the RT
+workflow needs manpower involvement 10 ensure its safety and accuracy, openaccess software can be used to demonstrate the Suitability of the novel AI techniques in ATP. When it is validated for clinical implementation, a suitable platform
+with vendor-specific parameters for automation needs to be incorporated. Under this
+situation, issues associated with intellectual property rights (IPR), data security, and
+quality assurance procedure development may be handled carefully by developing
+an industry model- academy collaboration to bring a new paradigm in RT treatment
+planning.
+
+6.4 AIAN INTENSITY MODULATED RADIOTHERAPY (IMRT)
+
+ANNs have been developed to overcome the challenges associated with image
+classification using CNNs and image segmentation using dilated CNNs (DCNNs).
+These Al-based models were originally established to perform son-medical
+
+--- Page 9 ---
+Artificial Intetligence in Radiotherapy 183
+
+activities like credit card fraud detection, label products, etc, Recently, these models
+have been used to solve the issues related to {MRT H&D treatment planning
+processes such as atito segmentation, dose estimation, ATP, decision making, and
+outcome prediction. This section deals with AT applications in various steps of
+IMRT for HAN cases (Georgios et al., 2011; Vasant et al., 2078).
+
+6.4.1 Al ror IMRT Dose Estimation
+
+H&N IMRT planning requires experienced medical physicists to plan the treatment
+and it is a time-consuming process as well. They should have enough knowledge
+about the generat 3D dose distribution/volumetric dose of any case as it is an important part of the workflow. Because it can estimate the dose received by the
+patients so that guides to correct the treatment plan, Presently, there are four
+techniques to estimate the 3D dose distribution in IMRT for H&N cases. They are:
+
+1. Deformation-atlas dose estimation: Generally, automatic H&N treatment
+planning models use the data collected from previous cases to estimate the 3D
+dose distribution for new cases. One possible way to accomplish it is by
+reconstructing images and gathering volumetric information of target and
+OARs. However, Al-based techniques reduce the volume of information from
+the input subset and use alternative structured data. For example, the regression forests model is supported with density prediction among the various
+features to choose the most suitable plan among the past plans from the plan
+library. Therefore, the prior dose will be selected for the new case. Among
+various models available for dose estimation, the atlas-based models are the
+first ML-based mode} that can support medical physicists to generate a new
+plan using previous plan data. It has three sub-processes: (a) reducing the
+number of image data and contour data into the input data sets, (b) relating
+those input data sets to a matching patient by the model, and (c) adjust the
+dose distribution of the matched previous case suitable for the new case
+through image registration. Hence, the accuracy of this model depends on the
+errors encountered in each process.
+
+2. Probabilistic-atlas dose estimation: Generally, ATP converts the dose estimated/voxel into a full-fledged dose distribution of a given IMRT plan, Atlasbased regression forest (ARF) modet can simulate the correlation between the
+3D dose distribution per unit voxel and image features of a given case such as
+the geometry of the patient, shape of the region of interest, and appearance of
+the image. Another model was developed to choose the most appropriate ARF
+modet to plan a new case based on the number of image features used. If less
+number of image features are used to plan a new plan then that ARF mode}
+will be considered as the best one. {t was aimed to simulate an expert's view
+on images of a new plan, choose a similar case from the tibrary of cases, and
+reproduce the dose distribution of the selected plan into the new plan.
+
+3, Fully connected neurat network-based dose estimation: Researchers found an
+alternative to the previous atlas-based modeis by directly estimating the dose
+by studying a series of classified features using ANNs. This model can help in
+
+--- Page 10 ---
+104 Artificial Intelligence Theory, Models, and Applications
+
+(MRT planning using a semi-unstructured technique. Even though they are
+multipurpose, suitable for most of the planning processes, easily trainabie,
+their performance is affected by overfitting and more memory requirement.
+4. CNN-based dose estimation: CNN-based dose estimation technique has been
+demonstrated as a substitute for the fully connected ANN technique to estimate the dose distribution volumetrically. Generally, there are two types of
+CNN models: Tiramisu models and DCNNs. Tiramisu models (e.g., U-net)
+“Se @ convolution approach for down-sampling during the encoding process
+fo study the series of features and then a de-convolution approach for upsampling during the decoding process to restore the input data. DCNN models
+use a canvolution approach to reduce the number of features during the encoding process and in turn, enlarge the field of coverage. However, they are
+complex, not easily trainable, and need advanced hardware facilities.
+
+6.4.2 Al ror IMRT PLANNING SUPPORT
+
+To reproduce dosimetry, to Provide planning support, and to reduce the issues in
+ATP, many At-based algorithms have been developed. Out of which, a few of them
+are discussed here in the following two aspects,
+
+1. Reproducing dosimetry: Many models have been proposed to reproduce the
+dosimetric aspects of a Planning process in IMRT. In one of the models, an
+additional program constructed on a commercial TPS to select the suitable
+
+contains three parts that include a commercial TPS, a library of previous
+plans, and a separate module for optimization by reproducing the routine
+dosimetric ¢oncepts.
+
+2. Optimization of planning parameters in TPS: Few more models have been
+developed that use a separate algorithm to find relevant objective specific
+
+approaches can perform many planning processes automatically.
+
+6.4.3 Al or Mopetinc IMRT Outcome AND PLAN DELiverasiisy
+
+As discussed earlier, many Al-based models are available to analyze the modeling
+efficiency of TCP, NTCP, and deliverability of a plan. Those models that predict the
+treatment outcome have « high potential to support decision making, to select a
+sreatment method, and to optimize a plan as well. A few of the Al-based models that
+
+are used to mode} the treatment outcome and deliverability of a plan on three aspects
+are as follows:
+
+1, Model for TCP prediction in IMRT: The present radiobiological models that
+are used for TCP prediction are rigid as they have many mathematical
+
+--- Page 11 ---
+Artificial Intelligence in Radiotherapy 105
+
+structures so that Al-based models are preferred to overcome the shortcomings.
+Generally, TCP is formatted with a Gompertzian function that corresponds to
+TCP parameters and dose that includes TCDS0 and the slope of the TCP curve.
+It gives a rough idea about the radiosensitivity of different types of tumors.
+When non-dosimetric parameters are integrated into these multivariable
+models, estimation of possible interactions would be a challengeable task.
+Therefore, many genomic biomarkers have been demonstrated recently to estimate the RT response but they are not yet used for H&N cases. So that the
+combined effect of ML models and genomic profiling may explain new
+interaction among the characteristics of the tumor, dosimetry, and tumor microenvironment with the patient. For example, a combination of the CoxProportional Hazard (CoxPH) model with a Kaplan-Meier (KM) model. Also,
+tadiomics will play a major role to design models for TCP prediction that is
+discussed here in the later section.
+
+2. Model for NTCP prediction in IMRT: Due to the toxicity of IMRT of H&N,
+the patient may get mucositis (uiceration and inflammation in the mucous
+membrane) that results in acute pain, dysphagia, and finally spoils the quality
+of patient’s life. If the patient gets mucositis during the treatment, it may
+break the conventional treatment which compromises the normal tissue
+complication that can be achieved by IMRT generally. Therefore, researchers
+developed ML-based models using forest classifiers with the capability of
+accurately predicting the mucositis by analyzing the spatial dose distribution,
+dose-volume, and examination data of the IMRT treatment.
+
+Similarly, IMRT of H&N can also cause xerostomia (dry mouth caused by a
+malfunction in the salivary gland) and increases the acidity of the surrounding
+region, and in turn affect the quality of the patient's life. To predict the xerostomia
+and its related toxicity, researchers have recently developed ML-based models
+using a multivariate logistic regression approach with input variables derived from
+dosimetric and clinical data like mean OAR dose. It is also demonstrated that nondosimetric variables such as age, education, economical condition, and tumor stage
+can also estimate the IMRT treatment-induced xerostomia.
+
+1. Model for Quality assurance in IMRT: Generally, H&N planning in IMRT is
+complex when compared to other cases that increases the chances of failure in
+patient-specific QA. It may be one of the reasons to postpone the treatnient
+and increases the clinical burden. Based on these, researchers developed
+many ML-based models to estimate the failure rate of IMRT patient-specific
+QA for H&B cases. A few of them are as follows:
+
+a. A virtual algorithm for MRT QA that utilizes cross-institutionally
+evaluated generalized additive methodology to estimate the passing rate
+of QA procedures. This approach uses a series of features designed by
+experts to measure the deviation between the planned and delivered
+systems and then predict the failure rate using ML-based algorithms. The
+study results showed that the failure rate of IMRT H&N QA procedures is
+
+--- Page 12 ---
+106
+
+Artificial Intelligence Theory, Models, and Applications
+
+higher than in other cases. However, this algorithm also shows high institutional ndency.
+
+b A CNN based tank 1 estimate the failure rate of IMRT QA from the
+dose distribution of the plan without any special features. Since its performance is not better than the previous model, a combination CNN
+model and the previous model with expert-designed features can improve
+its predictive accuracy. However, a CNN-based algorithm can perform
+inter-institutional analysis well.
+
+c. Another ML-based algorithm that uses SVMs can predict what are the
+N&N cases require re-planning. However, all these algorithms are under
+the developmental stage. If it is implemented successfully, it can enhance
+treatment efficacy and clinical outcome.
+
+6.4.4 Al For AUTO-SEGMENTATION OF OAR IN IMRT
+
+Segmentation of OARs and targets by manual processes affect the IMRT delivery
+due to high uncertainty and inconsistency in contouring associated with a broad
+margin, Generally, NTCP-based models depend on OAR segmentation and hence
+its accuracy highly depends on the contouring precision. To reduce those issues
+associated with manual contouring, models for auto Segmentation have been introduced. The two forms of auto Segmentation models are as follows:
+
+1. Atlas-based auto segmentation (ABAS); ABAS models create new contour
+
+Sets (0 choose a similar patient using a library of model atlas of prior images
+and contours by image registration process despite many variations.
+Following this, voxels that are anatomically similar in both of the CT images
+are registered deformably. Then, the prior contours are transferred onto the
+new plan using that deformation vector, Even though ABAS has been implemented clinically, it is affected by image artifacts, noise, and low tissue
+contrast. However, it can be further improved by enhancing the accuracy of
+the image registration process.
+
+. Auto segmentation using CNN: Many of the approaches of CNN-based image
+
+segmentation models have solved the issues associated with IMRT H&N
+segmentation. They have a good learning environment since they receive
+feedback from more images, however it is under the developmental stage.
+
+6.4.5 Future Directions
+
+1. The developments of Al in the IMRT planning process lead to many devel
+opments as discussed earlier. Since most of the models were developed independently, the organization of these models altogether to perform multiple
+tasks would be a potential area in the future, For example, a mode that
+performs contouring, dosimetry, and plan optimization can efficiently mode!
+plan prediction, plan deliverability, and patient outcomes.
+
+--- Page 13 ---
+Artificial Intelligence in Radiotherapy 107
+
+2. Since the Al-based models need a large number of good quality data, collaboration among institutions should be developed to enhance the performance of those algorithms. Therefore, distributed learning practice is
+recommended to face challenges associated with data aggregation among
+institutions.
+
+3. Most of the Al-based models are under the developmental stage. Therefore,
+extended educational and training activities along with clinical professionals
+are recommended.
+
+4. Efficient Al-based algorithms may be developed to train users to understand
+the mechanisms behind the decision-making process of various algorithms.
+
+5. It is well accepted that AI will make the future of IMRT bright by providing
+economic and high-quality patient care.
+
+6.5 AlIN BRACHYTHERAPY
+
+Al techniques have not been studied much in brachytherapy. Recently, ANN-based
+models have been demonstrated in image-guided brachytherapy to correct dose
+modification at OARs during the gynecological treatment. It was aimed to change
+the final brachytherapy plan to correct anatomical changes on OARS and variation
+in applicator position by keeping the same dose distribution. In this study, treatment
+plans of 30 cervical cancer patients, each received around 50 Gy dose over 5 weeks
+in teletherapy and suitable for intracavitary brachytherapy were chosen. ANN
+methods were used to estimate the variation in DVH during the treatment and help
+the professional to generate a good plan.
+
+Generally, it is a completed process and very difficult to solve by conventional
+analytical approaches as it is an inverse issue in the brachytherapy plan. Also, the
+problem characteristics are such a way that the data size is high and there is no prior
+data and knowledge that relates the variation in organ position and dose. Hence,
+analytical methods cannot solve it so that ANN-based models were used to solve the
+inverse issue. Here, a network of radial basis functions (RBF) and multilayer
+perceptron (MLP) was validated to confirm their ability to predict an outcome
+(Ramin et al., 2017).
+
+6.6 ALIN RADIOTHERAPY QUALITY ASSURANCE
+
+The recent developments in AI techniques result in many promising steps in the
+quality assurance (QA) of RT. Generally, treatment plan assessment and QA include contouring OARs and targets, field collimation and arrangement, dose uniformity inside the target, and sparing of normal tissues. But, these procedures
+becarne complex due to advancements in radiation technology and also a challcnging task in institutions having limited staff since they are reviewed manually using
+checklists and charts. Also, the manual review may lead to errors that necessitate
+the implementation of AI methods to automate its processes, reduce complexities
+using simple rules, and include provision for individualized assessment. Therefore,
+the quality of the plan, treatment planning time, advanced dosimetry, safety
+
+--- Page 14 ---
+8s Artificial Intelligence Theory, Models, 2! o ADE
+
+procedarcs, amd the development of sew QA procedures will be umproved (Alum
+aa Mii
+
+66.1 Devnoewens mm ML rowaans Quaurty AssumaNncE
+
+Vanoss aspects of RT QA procedures were developed to kemtify the best algorithm
+to perisems aff the QA procederes. A few of them are as follows:
+
+LA system oo estimate the Lisac performance over a long period.
+
+2. Aa Al-based application to estimate the passing rate of IMRT QA procedures
+
+3. Am approach to estimate MEC positional errors and to estimate the QA data
+eormalitecs.
+
++ A wel to measure the quality control value to detect outliers automatically.
+
+5. Algorithm to estimate the deviation of 2 final plan from its original goal to
+Sad the requirement for re-planming_
+
+Ts empotunt to meaton that all of the above developments are under research
+level and mot yet implemented for routine clinical applications.
+
+662 ArrucaTzons of ML Moogs ror Quauty AssumaNce IN
+RansoTHexary
+
+A few examples to explain bow Al techniques are applied to perform QA in RT are
+as follows:
+
+i: ATP waldagion: ATP validation is 2 complicated task that involves support
+from climcians, upgradation from computer computer professionals, findings of the
+wsers, und validation of the results in all the steps of RT workflow. Its main
+objective is to measure errors and find the suitability of the plan. The error
+may be caused by a commumication gap between the oncologist and the
+medical physicist, and diversion from the standard practice of the institution
+dee tw the participation of the patient in a clinica) trial, incorporation of
+eacologist’s literature knowledge to make a decision, medical history of the
+
+pacity to do grey area measurement, efficiency, and adaptability, The Random
+Forest approach can be used to analyze the contours on an image, to classify
+the region of imterest, and use that information in the algorithm to detect! the
+txrocs im the contours automatically. As it is a probabilistic approach, al!
+the regions are not shown explicitly. BN model can transparently handle the
+probabilistic ewents and is considered the best option. Aiso, Al-based BN
+
+--- Page 15 ---
+Artificial Intelligence in Radiotherapy 109
+
+models can mimic the reasoning process of a human to find the suitability of
+the plan.
+
+2. Knowledge-based planning (KBP): Inverse treatment planning needs a large
+number of objective functions to indicate dosimetric objectives and each
+function is specified by relevant parameters, Generally, the TPS algorithm
+optimizes those functions to perform a process. if the quantity of variables is
+high, users can not analyze the images and find those functional parameters to
+achieve the clinical objectives of a treatment plan. Fortunately, KBP can
+make such a planning process easy by giving a preliminary knowledge of
+original plans as a reference to compare the current plan. These algorithms
+were developed to reduce plan complexity and develop novel planning
+techniques. KBP algorithms have already been implemented in Varian
+Rapidplan. Many approaches to plan generation and evaluation were demonstrated based on the knowledge collected from interna! data and criteria
+of an institution. If the knowledge base of as many as possible experienced
+institutions is incorporated into the algorithm, the quality of the plan will be
+improved. Further, automatic KBP is encouraged to upgrade the planning
+process automatically in response to physiological changes that occurred
+during treatment. As mentioned earlier, various ML algorithms fave been
+developed for personafized treatment as well. Therefore, it is recommended to
+take efforts to enhance the efficiency and confidence of the knowledge-based
+automatic planning process in the future.
+
+3. To perform dosimetry-related quality assurance: ML-based algorithms can
+enhance the dosimetric procedures on two aspects. The first aspect is to develop models based on ML to estimate long term procedures like IMRT QA.
+Accordingly, various models such as regression algorithms, CNN-based
+models, etc. were developed recently. Regression algorithms can reduce the
+time required for plan measurement when the plan has more chance to be
+failed through multi-institutiona! validation. However, CNN based models
+don’t need extra domain knowledge. The second aspect is to develop MLbased models by using the data collected from routine QA measurements and
+machine performance. The presently available software in TPS is also collecting data regarding machine failure and its performance rate to prepare a
+chart of machine repair and maintenance. It will enable the model to predict
+the issues associated with machine performance and induce the user to take
+preventive measures without wasting lime. Regarding proton therapy, there
+are very few ML-based techniques to validate its dosimetric procedures which
+create an opportunity for future development.
+
+6.6.3 Quauty Assurance of ML ALGoriTHMs in RADIOTHERAPY
+
+QA of ML algorithms is an unsolved and interesting issue, When the data sources
+are increased and new ML algorithms are developed, the process of evaluating those
+models have also been grown correspondingly. To evaluate a model few basic
+principles should be followed that include the requirement of checking and validating the algorithms. Generally, three daia sets are used during the model learning
+
+--- Page 16 ---
+110 Artificial Intelligence Theory, Models, and Applications
+
+phase, testing phase, and validation phase which are from different sources/institutions, If there are no outside data sets or matching data sets, the user must
+perform all the processes using homogeneous data. But, it increases the risk of an
+unprecedented effect on its outcome since many variables may not be denoted
+explicitly. Under the extreme situation, “leave-one data-out” tactics can be adopted
+where the model is built by leaving one data and its performance is checked with
+the remaining data points. This process is carried out multiple times by leaving a
+different data point every time.
+
+Another problem that should be solved is the incorporation of incomplete data sets
+into the algorithm. It may lead to knowledge scarcity in the pasticular area or issue of
+
+and asthma, the algorithm will underestimate the risk and provide guidance accord.
+ingly. But, the asthma patient is very much aware of his respiratory problem. If the
+Patient is directed to take a test to confirm asthma and its result is included in the
+algorithm, it can predict the outcome perfectly. Unfortunately, this kind of the variable
+is very difficult to program and include So that they provide poor advice.
+
+Problem framing is another indicator of low-quality ML algorithms. An interesting example is the “finger of death” explained with the H&N IMRT case where
+the algorithm failed to include the objective of reducing the dese to the normal
+tissues. Then, we may get a mode} with excellent performance but failed to include
+the objective of the problem. However, this kind of issue can be easily solved by
+using validation data sets that are different from training data sets.
+
+Also, some of the algorithms do not have transparent approaches like black
+boxes that create problems while inspecting its quality. For example, CNN models
+
+6.6.4 CHALLENGES AssociaTeD wit Al For QUALITY ASSURANCE IN RT
+A few of the challenges associated with ML for QA in RT are as follows:
+
+1. Data quality:
+a. Data availability is extremely high in medicine and its complexity is also
+very high. Hence, it challenges the Al-based model development and its
+b. Most of the AI algorithms use numeric data sets. But, the data is not
+numeric in most of the cases and requires mapping and matric compu
+
+--- Page 17 ---
+Artificial Inteffigence in Radiotherapy lit
+
+c. Clinical data sets are sparse that increases the noise level and uncertainty.
+
+d. Incomplete data containing missing values is also chaflenging the algorithms as reduces its prediction capacity.
+
+¢. The performance of every algorithm is different and highly depends on
+the data characteristics. Hence, loca) data sets should be used to compare
+all the algorithms before implementing them for clinical use.
+
+f. Non-standardized and inconsistent terminology usage also causes noise
+and spoils the reliability of QA algorithms,
+
+2. Model adaptability:
+
+a. The adaptability and learning frequency of an algorithm plays a major
+
+role to make the model practical and flexible for modifications and
+
+upgrades.
+
+b. To evaluate the upgradation, provisions need to be incorporated into the
+algorithm so that users can arrange data suitable for clinical modifications.
+
+c. Raw data should be analyzed before its use in any model because clinical
+data are variable and have specific profiles. Therefore, the mode? should
+have adaptability, data standardization, and reproducibility to consider
+those changes.
+
+3. Modeling Jimitations:
+
+a. Lack of complete evaluation to analyze the dependency of a model on the
+characteristics of data sets in addition to its chatienges associated with
+data usage and stricture.
+
+b. If the signals are low, more data is needed for feature learning which
+triggers the requirement for high computing power and in turn reduces
+the model adaptability. To avoid the same, an “out of box” approach can
+be followed where the parameters in the model are pre-fearned as per the
+independent data sets, and later the trained values are fine-tuned as per the
+desired data sets.
+
+c. The most important challenge is in handling small high-quality data size
+and its associated complexity. This challenge can be overcome by sharing
+clinical study results among institutions to increase the sample size.
+
+6.6.5 Fusure Directions 7o improve AJ-Baseo Quauty
+Assurance in RT
+
+i Create tools for third-party QA and integrate them to enhance the resource
+utility and standard of present QA procedures, viz., automatic plan generation, plan testing, and plan evaluation.
+
+2. Integrate ML-based QA procedures into machine-based applications to
+make suitable QA for adaptive planning.
+
+3. Facilitate obdjectives for precision medicine in combination with genomics,
+radiomics, and proteomics to perform more advanced RT plan assessment.
+
+--- Page 18 ---
+112 Artificial Intelligence Theory, Models, and Applications
+
+4. Take more efforts to standardize and implement guidelines to effectively use
+
+data format, content, structure, and its related terminologies as per TG se
+5. Instantiate principles and guidelines among institutions a 5
+effect on QA procedures to enhance the portability of ah! algori < He
+6. Ontology knowledge can be used to construct a probability table using
+available data and use it clinically. : fe
+7. Knowledge formalized in the ontology can be used to direct probability table
+construction from available clinical data representing instances of how that
+knowledge was applied clinically to reduce communication errors and to
+simplify data extraction approaches across institutions.
+Connect data features into real-world cases through ML to grow its ontology base.
+9. Ascertain the independence between the design and validation of ML-based
+QA tools.
+10. Find points to integrate ML tools and human capacity in the decisionmaking process.
+
+ge
+
+6.7 Al IN RADIATION BIOLOGY
+
+Due to the advancements in computational techniques, many methods have been
+developed for data analysis at a large scale in the area of molecular screening,
+proteomics, genomics, etc. In most of these methods, a supervised learning method
+was used earlier which was further upgraded by using ML and DL techniques.
+Recently, they have been further enhanced with neural network-based algorithms by
+utilizing the advantage of AI. Originally, they have been introduced to support
+decision making in many areas like the detection of benign and malignant tumors.
+With the enormous efforts of researchers, Al-based algorithms that are capable of
+detecting various types of cancer from clinical and non-clinical data sets.
+
+Also, AI has the potential of developing algorithms in the area of Radiation
+biology to simulate the physiology of radiation sickness, and radiation-induced
+biological effects at molecular, cellular, tissue, and organ level. Since the human
+system is complex, it is necessary to understand the variation in the biological
+effects of ionizing radiation among individuals to protect them. If there are many
+variable and complex factors that influence the outcome, the associated complexity
+in radiation biology can be understandable by using computational methods.
+However, these methods should be suitable to predict and process more number of
+biological events to study life complexity and achieve the desired solution
+(indraganti et al., 2019).
+
+6.8 Al IN RADIATION PROTECTION/SAFETY
+
+Al-based systems have been implemented to ensure the protective and effective use
+of radiation in industry, medicine, and research. The government of Singapore has
+introduced an AlI-based system to help their radiation protection agency to give
+explanation and suggestions to the public on radiation protection point of view.
+Originally, it was developed by the combined efforts of scientific officers from
+
+--- Page 19 ---
+Artificial Intelligence in Radiotherapy 113
+
+radiation protection agencies who are familiar with the associated rules and regulations and computational experts. Even though the scientific officers are playing a
+major role to maintain the system, it was developed in such a way that even a
+clerical staff can answer the regular questions and provide suggestions on their
+regulatory aspects and services.
+
+The system consists of two working teams: an operational team and a development team. The operational team has two subdivisions: one sector is to implement radiation safety standards and legislation by the way of inspection and
+licensing, and the second sector is to give services to promote radiation protection.
+The main function of the development team is to confirm the safe handling of
+radiation devices in the public, perform radiation surveys, conduct awareness
+programs for safe handling and usage of radiation, and to train the radiation workers
+(Tan et al., 1989).
+
+6.8.1. Motivations To Devetop AI-BAsED SysTEMS FOR RADIATION
+PROTECTION
+
+The basic considerations to develop Al-based systems for radiation protection are as
+follows:
+
+1. Scarcity of experts: Generally, some limited scientific officers are working in
+radiation protection agencies like Atomic Energy Regulatory Board (AERB),
+Mumbai with formal education or experience. Additional manpower development in this area is a time consuming and expensive event. Therefore, Albased systems can be used to manage all the activities with the limited experts
+and to relieve them from heavy workload by automating some of their routine
+functions. In this way, the system can use manpower effectively and productively. Also, the same system can be utilized as a teaching tool to
+strengthen radiation safety professionals to handle various cases practically.
+
+2. Type of the task: To give a small instruction, the scientific officer either
+depends on the huge volumes of regulations associated with the legislation or
+their knowledge, experience, and expertise. Identifying and using the correct
+legislation is not easy always mainly for rare cases. Further, the right rule
+should be applied at the right time and direction that necessitates an expert’s
+knowledge as well.
+
+6.8.2 Prosiems ASSOCIATED wiTH AI-BAseD Systems FOR RADIATION
+PROTECTION
+
+A few of the problems related to AJ-based systems regarding radiation protection
+
+are as follows:
+
+1. Complexity in the decision-making process: Finding a relevant license for a
+specific radioactive source and directing the exact legal requirement is a
+
+--- Page 20 ---
+114 Artificial Intelligence Theory, Models, and Applications
+
+simple process. But, it became a challenging task when a large range of
+radioactive sources are used for various applications.
+
+2. Unawareness of radiation physics: Lack of knowledge of the end-user about
+the basics of radiation physics further complicate the automation of the decision making process. In most cases, the end-user may not aware of the
+difference between a radioactive source and X-ray equipment so that they
+cannot categorize and understand the characteristics of their source. Hence, a
+simple one-to-one interaction that deals with sensitive information may not
+Sufficient to complete the task successfully. Under these circumstances, AIbased systems can efficiently handle the installation procedure by providing
+Sufficient information to the end-user without wasting an expert’s time.
+
+3. To satisfy all the safety requirements, source details and their applications
+should be provided. Regulatory authorities need to provide relevant rules and
+regulations, laboratory dimension, beam delivery and storage criteria,
+shielding, and manpower requirements based on the activity/quantity of
+radioactive substance and procedures involved. Also, the requirement for
+preventive measures to handle radiation hazards and contamination of
+tadioactive substances should be considered while planning a laboratory.
+Therefore, the system should be capable of determining the type of
+laboratory-based on the source classification. Even though all the rules and
+regulations are included in the system, it should be used under the supervision
+of the expert as it requires more knowledge and experience in decisionmaking processes. This is termed knowledge engineering.
+
+6.8.3 BENEFITS AND FUTURE DIRECTIONS
+
+Al-based systems have many benefits at the scientific officer level to train newly
+appointed scientific officers who have lack practical experience, at the clerical staff
+level to train them on basic aspects of radiation physics parameters and at the enduser level. If the end-users are scientific officers, the system acts as an assistant and
+provides immediate response and guidance without any questions. Otherwise, the
+system behaves as a colleague and provides more guidance to handle tough cases.
+
+Despite this, the present system should be improved to solve the complexity
+involved in machine- man interface and with different categories of users. Further,
+its potential may be extended towards non-ionizing radiation applications in the
+future.
+
+6.9 RADIOMICS IN RADIOTHERAPY
+
+Recently, radiation oncology identified a novel field for quantitative image analysis
+(QUA) namely Radiomics where the involvement of medical physicists is meager at
+present but has bright potential in the future. Radiomics have an important role in
+precision medicine by estimating the treatment outcome and side effect of RT on
+individual patients. It consists of two major steps: (1) extraction of dynamic and
+static features from images suitable for a further treatment plan, and (2) integration
+of those imaging features into a model to estimate the treatment outcome. It helps
