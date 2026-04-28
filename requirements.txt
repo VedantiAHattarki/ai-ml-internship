@@ -1,0 +1,10 @@
+flask
+boto3
+opencv-python
+pytesseract
+numpy
+pdf2image
+Pillow
+Werkzeug
+schedule
+pymupdf

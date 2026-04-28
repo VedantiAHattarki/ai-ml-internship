@@ -39,8 +39,6 @@ Real-world uses:
 Tested the program using the following PDFs:
 -Task1A.pdf - sample pdf 
  sample_output.txt - sample pdf's output
--Task1ascanned.pdf - scanned pdf from my local system
- output.txt - scanned pdf's output
 
 Installing dependencies :
 -Install python (version 3.8 or above)
