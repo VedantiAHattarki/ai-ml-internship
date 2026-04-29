@@ -105,8 +105,8 @@ def extract_text_from_pdf(pdf_path):
 
 
 if __name__ == "__main__":
-    input_pdf = "pdf_to_text.pdf"
-    output_file = "sample_output.txt"
+    input_pdf = "pdf_to_text1.pdf"
+    output_file = "sample_output1.txt"
 
     result = extract_text_from_pdf(input_pdf)
 

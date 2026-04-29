@@ -1,14 +1,41 @@
-import mimetypes
+import os
+import fitz  # PyMuPDF
+
+IMAGE_EXTENSIONS = [".jpg", ".jpeg", ".png", ".bmp", ".tiff", ".webp"]
+VIDEO_EXTENSIONS = [".mp4", ".avi", ".mov", ".mkv", ".wmv"]
+PDF_EXTENSIONS = [".pdf"]
+
+
+def is_digital_pdf(file_path):
+    try:
+        doc = fitz.open(file_path)
+        extracted_text = ""
+
+        for page in doc:
+            extracted_text += page.get_text()
+
+        doc.close()
+
+        return len(extracted_text.strip()) > 50
+
+    except Exception:
+        return False
+
 
 def classify_file(file_path):
-    file_type, _ = mimetypes.guess_type(file_path)
+    extension = os.path.splitext(file_path)[1].lower()
 
-    if file_type:
-        if "pdf" in file_type:
-            return "pdf"
-        elif "image" in file_type:
-            return "image"
-        elif "video" in file_type:
-            return "video"
+    if extension in PDF_EXTENSIONS:
+        if is_digital_pdf(file_path):
+            return "digital_pdf"
+        else:
+            return "image_pdf"
 
-    return "unknown"
+    elif extension in IMAGE_EXTENSIONS:
+        return "image"
+
+    elif extension in VIDEO_EXTENSIONS:
+        return "video"
+
+    else:
+        return "unknown"

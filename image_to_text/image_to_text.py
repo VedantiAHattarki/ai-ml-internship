@@ -58,7 +58,7 @@ def extract_text_from_image(image_path):
 
 
 if __name__ == "__main__":
-    input_image = "sample_image1B.png"
+    input_image = "image_to_text.jpg"
 
     result = extract_text_from_image(input_image)
 
