@@ -2,35 +2,177 @@
 
 ## OCR File Processing and Automation System
 
-This project is an end-to-end **OCR (Optical Character Recognition) Automation System** that processes **PDFs, Images, and Videos** to extract text.
+This project is an end-to-end **OCR (Optical Character Recognition) File Processing and Automation System** developed as part of my AI/ML internship work.
 
-The system is designed using:
+The main goal of this project is to extract text from different types of files such as **PDFs, images, and videos** using OCR techniques. The project was initially developed as separate Python programs and later upgraded into a structured **FastAPI-based Python package** with Swagger UI support.
 
-* **Flask APIs** is an API built using Flask(a Python Framework) that allows users or systems to send and get responses over the internet.In this project it is used for exposing the functionalities using REST(**Representational State Transfer** - A standard way of communicating over the internet using HTTP).
+The system currently supports:
 
-* **AWS S3** is a service used to store and retrieve files (data) over the internet. In this project AWS S3 is used to store input and output files in a sclable, reliable and cloud-based storage system that enables automated processing workflows.
-
-* **Scheduler** is a program that runs tasks automatically at regular intervals. In this project it is used to monitor S3 input folder for regular intervals of time if any new files are found then processes the files automatically and stores the output in output folder and sends the input file to processed file after processing (automated processing).
-
-* **Classifier** is a component that identifies or categorizes input into different types.In this project it is used for intelligent file handling. When new file is uploaded in AWS S3, classifier identifies it and decides it is pdf, image or video and classifies accordingly.
-
-It simulates a real-world backend system where files are automatically processed and results are stored in the cloud.
+* Image to text extraction
+* PDF to text extraction
+* Video to text extraction
+* API testing using Swagger UI
+* Virtual environment-based dependency management
+* AWS S3-based file processing workflow
+* Scheduler-based automation
+* File classification for routing files to the correct OCR service
 
 ---
 
-## Key Features
+## Overview
 
-* Extract text from:
-  * Digital PDFs
-  * Images
-  * Videos
-*  REST APIs using Flask
-*  API testing using Postman
-*  AWS S3 integration (input/output automation)
-*  Scheduler to monitor S3 folder
-*  Intelligent file classifier
-*  Improved video OCR (duplicate removal + noise filtering)
-*  Clean and structured output generation
+In the earlier version, the OCR programs were written separately for images, PDFs, and videos. Later, these programs were arranged into a proper Python package structure and exposed as REST APIs using FastAPI.
+
+FastAPI provides automatic API documentation through Swagger UI, which allows the APIs to be tested directly from the browser without using Postman.
+
+This project simulates a real-world backend automation system where files can be uploaded, processed, classified, and stored in an organized way.
+
+---
+
+## Completed Work Till Date
+
+### 1. FastAPI Package Structure
+
+The separate OCR programs were merged into a single modular Python package.
+
+The project is now organized into:
+
+* `api` layer for FastAPI route files
+* `services` layer for OCR processing logic
+* `utils` layer for helper functions
+* `core` layer for configuration files
+
+This makes the project easier to understand, maintain, and extend.
+
+---
+
+### 2. FastAPI APIs and Swagger UI
+
+The OCR functionalities are exposed using FastAPI APIs.
+
+Swagger UI is available at:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+Current API endpoints:
+
+```text
+GET  /api/health
+POST /api/image/process
+POST /api/pdf/process
+POST /api/video/process
+```
+
+All image, PDF, and video APIs were tested successfully using Swagger UI.
+
+---
+
+### 3. Image OCR
+
+The image OCR service extracts text from image files such as JPG, JPEG, and PNG.
+
+The image processing flow includes:
+
+* Reading the uploaded image
+* Converting the image to grayscale
+* Resizing the image for better OCR accuracy
+* Applying Gaussian blur
+* Applying adaptive thresholding
+* Extracting text using PyTesseract OCR
+* Returning the extracted text through the API response
+
+---
+
+### 4. PDF OCR
+
+The PDF OCR service supports both digital PDFs and scanned PDFs.
+
+For digital PDFs:
+
+* PyMuPDF is used to extract text directly from the PDF.
+
+For scanned PDFs:
+
+* PDF2Image converts PDF pages into images.
+* OpenCV preprocesses the image pages.
+* PyTesseract extracts text from each page.
+
+This allows the system to handle both text-based and image-based PDF files.
+
+---
+
+### 5. Video OCR
+
+The video OCR service extracts visible text from video frames.
+
+The video processing flow includes:
+
+* Reading the uploaded video using OpenCV
+* Selecting frames at fixed intervals
+* Preprocessing each selected frame
+* Extracting text using PyTesseract
+* Removing duplicate and noisy text
+* Returning the final cleaned text
+
+This helps reduce repeated text and improves the readability of video OCR output.
+
+---
+
+### 6. Virtual Environment Support
+
+A virtual environment is used to manage all Python dependencies.
+
+The `.venv/` folder is used locally and is not pushed to GitHub.
+
+All required packages are stored in:
+
+```text
+requirements.txt
+```
+
+This allows the project to be set up easily on another system using:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+---
+
+### 7. AWS S3 and Scheduler Support
+
+The project also includes AWS S3-based automation.
+
+The scheduler monitors the S3 input folder. When a new file is found, it downloads the file, classifies it, processes it using the correct OCR service, uploads the output text file to S3, and moves the original file to the processed folder.
+
+S3 workflow:
+
+```text
+File uploaded to input/
+        ↓
+Scheduler detects the file
+        ↓
+Classifier identifies the file type
+        ↓
+Correct OCR service is called
+        ↓
+Extracted text is generated
+        ↓
+Output file is uploaded to output/
+        ↓
+Original file is moved to processed/
+```
+
+S3 folder structure:
+
+```text
+ai-ml-project-bucket/
+│
+├── input/
+├── output/
+└── processed/
+```
 
 ---
 
@@ -106,7 +248,7 @@ ai-ml-internship/
 
 ---
 
-## How the FastAPI Flow Works
+## FastAPI Workflow
 
 ```text
 User uploads a file through Swagger UI
@@ -115,14 +257,14 @@ FastAPI route receives the uploaded file
         ↓
 File is saved temporarily in temp/
         ↓
-Related service function is called
+Related OCR service function is called
         ↓
 OCR processing is performed
         ↓
 Extracted text is returned as JSON response
 ```
 
-Example response:
+Example API response:
 
 ```json
 {
@@ -135,40 +277,7 @@ Example response:
 
 ---
 
-## API Endpoints
 
-###  API Testing (Postman)
-
-### process-pdf
-
-![Postman](screenshots/postman_pdf_preview.png)
-
-### process-image
-
-![Postman](screenshots/postman_image_preview.png)
-
-### process-video
-
-![Postman](screenshots/postman_video_preview.png)
-
-###  AWS S3 Input
-
-![S3 Input](screenshots/s3_input.png)
-
-###  AWS S3 Output
-
-![S3 Output](screenshots/s3_output.png)
-
-###  Scheduler Execution
-
-![Scheduler](screenshots/scheduler.png)
-
-### AWS S3 Processed
-
-![S3 Processed](screenshots/s3_processed.png)
-
-### FastAPI Swagger UI
-![FastAPI Swagger UI](screenshots/FastAPI_Swagger_UI.jpeg)
 
 ## How to Run the Project
 
@@ -242,11 +351,11 @@ http://127.0.0.1:8000/docs
 1. Open Swagger UI.
 2. Select the API endpoint.
 3. Click `Try it out`.
-4. Upload a file if required.
+4. Upload a file if the endpoint requires it.
 5. Click `Execute`.
 6. Check the response body.
 
-This allows image, PDF, and video APIs to be tested directly from the browser.
+This allows the image, PDF, and video APIs to be tested directly from the browser.
 
 ---
 
@@ -266,7 +375,7 @@ The scheduler monitors the S3 input folder and automatically processes new files
 
 ## Environment Variables
 
-The project uses `.env` for configuration.
+The project uses a `.env` file for configuration.
 
 Example `.env` file:
 
@@ -293,7 +402,7 @@ The `.env` file should not be pushed to GitHub.
 
 ## Classifier Logic
 
-The classifier identifies the uploaded file type based on its extension and content.
+The classifier identifies the uploaded file type based on its extension and PDF content.
 
 It supports:
 
@@ -315,14 +424,54 @@ For S3 automation, the extracted text is saved as a `.txt` file and uploaded to 
 
 ---
 
+## Screenshots
+
+###  API Testing (Postman)
+
+### process-pdf
+
+![Postman](screenshots/postman_pdf_preview.png)
+
+### process-image
+
+![Postman](screenshots/postman_image_preview.png)
+
+### process-video
+
+![Postman](screenshots/postman_video_preview.png)
+
+###  AWS S3 Input
+
+![S3 Input](screenshots/s3_input.png)
+
+###  AWS S3 Output
+
+![S3 Output](screenshots/s3_output.png)
+
+###  Scheduler Execution
+
+![Scheduler](screenshots/scheduler.png)
+
+### AWS S3 Processed
+
+![S3 Processed](screenshots/s3_processed.png)
+
+### FastAPI Swagger UI
+![FastAPI Swagger UI](screenshots/FastAPI_Swagger_UI.jpeg)
+
+
+
+---
+
 ## Current Status
 
 Completed:
 
 * Converted old OCR programs into a modular FastAPI package
 * Added API routes for image, PDF, and video processing
+* Added a health check API
 * Added Swagger UI support
-* Tested APIs successfully through Swagger UI
+* Tested image, PDF, and video APIs successfully through Swagger UI
 * Added virtual environment support
 * Updated `requirements.txt`
 * Added `.gitignore`
@@ -355,57 +504,11 @@ Completed:
 
 ---
 
-## Screenshots
-
-### FastAPI Swagger UI
-
-```text
-screenshots/swagger_ui.png
-```
-
-### Image API Output
-
-```text
-screenshots/image_api_output.png
-```
-
-### PDF API Output
-
-```text
-screenshots/pdf_api_output.png
-```
-
-### Video API Output
-
-```text
-screenshots/video_api_output.png
-```
-
-### AWS S3 Input
-
-```text
-screenshots/s3_input.png
-```
-
-### AWS S3 Output
-
-```text
-screenshots/s3_output.png
-```
-
-### Scheduler Execution
-
-```text
-screenshots/scheduler.png
-```
-
----
-
 ## Learning Outcome
 
-Through this project, I learned how to build a backend OCR processing system using Python. I also understood how to organize code into a package structure, expose APIs using FastAPI, test APIs using Swagger UI, manage dependencies using a virtual environment, and connect the workflow with AWS S3 automation.
+Through this project, I learned how to convert separate Python OCR scripts into a structured backend application. I also learned how to organize code into a package structure, expose OCR functions through FastAPI APIs, test APIs using Swagger UI, manage dependencies using a virtual environment, and connect the workflow with AWS S3 automation.
 
-This project helped me understand how separate Python scripts can be converted into a more structured and maintainable backend application.
+This project helped me understand how a backend OCR processing system can be designed in a more organized, reusable, and industry-oriented way.
 
 ---
 
