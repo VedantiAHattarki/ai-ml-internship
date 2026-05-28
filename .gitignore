@@ -1,15 +1,62 @@
+# # Virtual environment
+# .venv/
+
+# # Python cache
+# __pycache__/
+
+# # Temp files
+# temp/
+
+# # Output files
+# *.txt
+
+# # OS files
+# .DS_Store
+# Thumbs.db
+
 # Virtual environment
 .venv/
+venv/
+env/
 
 # Python cache
 __pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+htmlcov/
 
-# Temp files
+# Environment variables / secrets
+.env
+.env.local
+*.env
+
+# Temp and uploaded files
 temp/
+uploads/
+outputs/
 
-# Output files
+# Sample/output files
 *.txt
+*.log
+
+# Large media files
+*.mp4
+*.avi
+*.mov
+*.mkv
+
+# Image/PDF sample files if you do not want to push them
+# *.jpg
+# *.jpeg
+# *.png
+# *.pdf
 
 # OS files
 .DS_Store
 Thumbs.db
+
+# VS Code settings optional
+.vscode/

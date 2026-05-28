@@ -1,68 +1,190 @@
-# AI-ML Internship Project 
+# AI-ML Internship Project
 
-##  Overview
+## OCR File Processing and Automation System
 
-This project is an end-to-end **OCR (Optical Character Recognition) Automation System** that processes **PDFs, Images, and Videos** to extract text.
+This project is an end-to-end **OCR (Optical Character Recognition) automation system** built as part of my AI/ML internship work. The system processes **PDF files, image files, and video files** and extracts readable text from them.
 
-The system is designed using:
-
-* **Flask APIs** is an API built using Flask(a Python Framework) that allows users or systems to send and get responses over the internet.In this project it is used for exposing the functionalities using REST(**Representational State Transfer** - A standard way of communicating over the internet using HTTP).
-
-* **AWS S3** is a service used to store and retrieve files (data) over the internet. In this project AWS S3 is used to store input and output files in a sclable, reliable and cloud-based storage system that enables automated processing workflows.
-
-* **Scheduler** is a program that runs tasks automatically at regular intervals. In this project it is used to monitor S3 input folder for regular intervals of time if any new files are found then processes the files automatically and stores the output in output folder and sends the input file to processed file after processing (automated processing).
-
-* **Classifier** is a component that identifies or categorizes input into different types.In this project it is used for intelligent file handling. When new file is uploaded in AWS S3, classifier identifies it and decides it is pdf, image or video and classifies accordingly.
-
-It simulates a real-world backend system where files are automatically processed and results are stored in the cloud.
+The project was initially developed as separate OCR programs and Flask APIs. It has now been upgraded into a clean **FastAPI-based Python package** with a modular structure, Swagger UI support, virtual environment dependency management, and reusable service layers.
 
 ---
 
-## Key Features
+## Overview
 
-* Extract text from:
-  * Digital PDFs
-  * Images
-  * Videos
-*  REST APIs using Flask
-*  API testing using Postman
-*  AWS S3 integration (input/output automation)
-*  Scheduler to monitor S3 folder
-*  Intelligent file classifier
-*  Improved video OCR (duplicate removal + noise filtering)
-*  Clean and structured output generation
+The main purpose of this project is to automate text extraction from different file formats using OCR and backend APIs.
+
+The system can process:
+
+* Digital PDFs
+* Scanned PDFs
+* Images
+* Videos
+
+It also includes support for AWS S3-based automation, where files can be uploaded to an input folder, processed automatically, and moved to output and processed folders.
+
+This project simulates a real-world backend workflow where files are uploaded, classified, processed, and stored in a structured way.
 
 ---
 
-##  Project Structure
+## Completed Work
 
+### 1. FastAPI Package Structure
+
+The OCR programs were merged into a single Python package instead of keeping them as separate files.
+
+The project is now organized into:
+
+* `api` layer for FastAPI routes
+* `services` layer for OCR and processing logic
+* `utils` layer for helper functions
+* `core` layer for configuration
+
+This makes the code cleaner, reusable, and easier to maintain.
+
+---
+
+### 2. FastAPI APIs with Swagger UI
+
+The image, PDF, and video OCR functionalities are exposed as REST APIs using FastAPI.
+
+Swagger UI is available at:
+
+```text
+http://127.0.0.1:8000/docs
 ```
+
+Using Swagger UI, the APIs can be tested directly from the browser without using Postman.
+
+Available APIs:
+
+```text
+GET  /api/health
+POST /api/image/process
+POST /api/pdf/process
+POST /api/video/process
+```
+
+---
+
+### 3. Virtual Environment Support
+
+A virtual environment is used to manage all Python dependencies for the project.
+
+This helps keep project dependencies separate from the global Python installation.
+
+The dependency list is maintained in:
+
+```text
+requirements.txt
+```
+
+The `.venv/` folder is ignored using `.gitignore`, so only the dependency list is pushed to GitHub.
+
+---
+
+### 4. OCR Processing
+
+The project supports OCR processing for multiple file types.
+
+For images:
+
+* OpenCV is used for preprocessing
+* PyTesseract is used for text extraction
+
+For PDFs:
+
+* PyMuPDF is used for digital PDF text extraction
+* PDF2Image and PyTesseract are used for scanned PDF OCR
+
+For videos:
+
+* OpenCV is used to read video frames
+* PyTesseract is used to extract text from selected frames
+* Duplicate and noisy text is filtered to improve the output
+
+---
+
+### 5. AWS S3 Automation
+
+The project also supports AWS S3-based automation.
+
+The S3 workflow is:
+
+```text
+File uploaded to input/
+        ↓
+Scheduler detects the file
+        ↓
+Classifier identifies file type
+        ↓
+Correct OCR service is called
+        ↓
+Extracted text is saved as output
+        ↓
+Output file is uploaded to output/
+        ↓
+Original file is moved to processed/
+```
+
+S3 folder structure:
+
+```text
+ai-ml-project-bucket/
+│
+├── input/
+├── output/
+└── processed/
+```
+
+---
+
+## Project Structure
+
+```text
 ai-ml-internship/
 │
-├── api_layer/                # Flask APIs
-│   ├── app.py
-│   └── routes/
+├── app/
+│   ├── __init__.py
+│   ├── main.py
 │
-├── digitalpdf_to_text/       # PDF OCR logic
-│   └── pdf_to_text.py
+│   ├── api/
+│   │   ├── __init__.py
+│   │   ├── routes_health.py
+│   │   ├── routes_image.py
+│   │   ├── routes_pdf.py
+│   │   └── routes_video.py
 │
-├── image_to_text/            # Image OCR logic
-│   └── image_to_text.py
+│   ├── core/
+│   │   ├── __init__.py
+│   │   └── config.py
 │
-├── video_to_text/            # Video OCR logic
-│   └── video_to_text.py
+│   ├── services/
+│   │   ├── __init__.py
+│   │   ├── image_service.py
+│   │   ├── pdf_service.py
+│   │   ├── video_service.py
+│   │   ├── classifier_service.py
+│   │   └── s3_service.py
 │
-├── s3_service/               # AWS S3 operations
-│   ├── s3_client.py
-│   ├── upload.py
-│   └── download.py
+│   └── utils/
+│       ├── __init__.py
+│       └── file_utils.py
 │
-├── classifier.py             # File type detection
-├── scheduler.py              # Automation engine
-├── config.py                 # Configuration settings
+├── old_code/
+│   └── previous Flask and standalone OCR files
 │
-├── README.md
+├── sample_files/
+│   ├── images/
+│   ├── pdfs/
+│   └── videos/
+│
+├── screenshots/
+├── temp/
+├── tests/
+│
+├── scheduler.py
+├── run.py
 ├── requirements.txt
+├── README.md
 └── .gitignore
 ```
 
@@ -71,134 +193,52 @@ ai-ml-internship/
 ## Technologies Used
 
 * Python
+* FastAPI
+* Swagger UI
+* Uvicorn
 * OpenCV
-* PyTesseract (OCR)
-* PDF2Image
+* PyTesseract OCR
 * PyMuPDF
-* Flask
-* AWS S3 (Boto3)
+* PDF2Image
+* NumPy
+* Pillow
+* AWS S3
+* Boto3
+* Python Dotenv
+* Schedule
 
 ---
 
-## System Workflow
+## How the FastAPI Flow Works
 
-```
-User uploads file → S3 (input/)
+```text
+User uploads a file through Swagger UI
         ↓
-Scheduler detects file
+FastAPI route receives the uploaded file
         ↓
-Classifier identifies file type
+File is saved temporarily in temp/
         ↓
-Correct OCR function is triggered
+Related service function is called
         ↓
-Text is extracted and cleaned
+OCR processing is performed
         ↓
-Output stored in S3 (output/)
-        ↓
-Original file moved to (processed/)
+Extracted text is returned as JSON response
+```
+
+Example response:
+
+```json
+{
+  "status": "success",
+  "filename": "sample.pdf",
+  "file_type": "pdf",
+  "extracted_text": "Extracted text appears here"
+}
 ```
 
 ---
 
-## AWS S3 Structure
-
-```
-ai-ml-project-bucket/
-│
-├── input/        # Upload files here
-├── output/       # Extracted text output
-└── processed/    # Processed files
-```
-
----
-
-##  How to Run the Project
-
-### 1. Clone Repository
-
-```bash
-git clone https://github.com/VedantiAHattarki/ai-ml-internship.git
-cd ai-ml-internship
-```
-
----
-
-### 2. Create Virtual Environment
-
-```bash
-python -m venv .venv
-```
-
-Activate:
-
-```powershell
-.\.venv\Scripts\Activate.ps1
-```
-
----
-
-### 3. Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
----
-
-### 4. Set AWS Credentials
-
-PowerShell:
-
-```powershell
-$env:AWS_ACCESS_KEY_ID="YOUR_KEY"
-$env:AWS_SECRET_ACCESS_KEY="YOUR_SECRET"
-```
-
----
-
-### API Testing
-
-Run Flask app:
-
-```bash
-python -m api_layer.app
-```
-
-Test using Postman:
-
-* POST `/process-image`
-* POST `/process-pdf`
-* POST `/process-video`
-
----
-
-
-### 5. Run Scheduler
-
-```bash
-python scheduler.py
-```
-
----
-
-### 6. Upload File
-
-Upload any file to:
-
-```
-S3 → input/
-```
-
-The system will automatically process it.
-
----
-
-
-##  Screenshots
-
-### Project Structure
-
-![Project Structure](screenshots/project_structure.png)
+## API Endpoints
 
 ###  API Testing (Postman)
 
@@ -230,57 +270,248 @@ The system will automatically process it.
 
 ![S3 Processed](screenshots/s3_processed.png)
 
----
+### FastAPI Swagger UI
+![FastAPI Swagger UI](screenshots/FastAPI_Swagger_UI.jpeg)
 
-##   Classifier Logic
+## How to Run the Project
 
-* Identifies file type using extension
-* Differentiates:
+### 1. Clone the Repository
 
-  * Digital PDF
-  * Image
-  * Video
-* Routes file to appropriate OCR function
-
----
-
-##  Output
-
-* Extracted text is saved as `.txt`
-* Stored in S3 `output/`
-* Cleaned and structured output
+```bash
+git clone https://github.com/VedantiAHattarki/ai-ml-internship.git
+cd ai-ml-internship
+```
 
 ---
 
-##  Limitations
+### 2. Create a Virtual Environment
 
-* OCR accuracy depends on input quality
-* Video OCR may contain minor noise
-* Some spelling errors may occur
-
----
-
-##  Future Enhancements
-
-* Parallel processing for faster execution
-* Event-driven architecture (S3 → Lambda)
-* Advanced OCR models (EasyOCR / AWS Textract)
-* Spell correction for output text
-* Streamlit-based UI for file upload
+```bash
+python -m venv .venv
+```
 
 ---
 
-##  Acknowledgement
+### 3. Activate the Virtual Environment
 
-Developed as part of an AI/ML Internship to understand:
+For Windows PowerShell:
 
-* OCR systems
-* API development
-* Cloud automation
-* End-to-end system design
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+After activation, the terminal should show:
+
+```text
+(.venv)
+```
 
 ---
 
-##  Author
+### 4. Install Dependencies
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+---
+
+### 5. Run the FastAPI Application
+
+```bash
+python run.py
+```
+
+If the application starts successfully, the terminal will show:
+
+```text
+Uvicorn running on http://127.0.0.1:8000
+```
+
+---
+
+### 6. Open Swagger UI
+
+Open this URL in the browser:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+---
+
+## Testing APIs in Swagger UI
+
+1. Open Swagger UI.
+2. Select the API endpoint.
+3. Click `Try it out`.
+4. Upload a file if required.
+5. Click `Execute`.
+6. Check the response body.
+
+This allows image, PDF, and video APIs to be tested directly from the browser.
+
+---
+
+## Running the Scheduler
+
+The scheduler is used for AWS S3 automation.
+
+Run:
+
+```bash
+python scheduler.py
+```
+
+The scheduler monitors the S3 input folder and automatically processes new files.
+
+---
+
+## Environment Variables
+
+The project uses `.env` for configuration.
+
+Example `.env` file:
+
+```env
+AWS_REGION=ap-south-1
+INPUT_BUCKET=ai-ml-project-bucket
+OUTPUT_BUCKET=ai-ml-project-bucket
+INPUT_PREFIX=input/
+OUTPUT_PREFIX=output/
+PROCESSED_PREFIX=processed/
+TEMP_FOLDER=temp
+```
+
+If AWS credentials are needed locally:
+
+```env
+AWS_ACCESS_KEY_ID=your_access_key
+AWS_SECRET_ACCESS_KEY=your_secret_key
+```
+
+The `.env` file should not be pushed to GitHub.
+
+---
+
+## Classifier Logic
+
+The classifier identifies the uploaded file type based on its extension and content.
+
+It supports:
+
+* Digital PDF
+* Scanned PDF
+* Image
+* Video
+* Unknown file type
+
+Based on the classification result, the file is routed to the correct OCR service.
+
+---
+
+## Output
+
+The extracted text is returned through the API response.
+
+For S3 automation, the extracted text is saved as a `.txt` file and uploaded to the S3 `output/` folder.
+
+---
+
+## Current Status
+
+Completed:
+
+* Converted old OCR programs into a modular FastAPI package
+* Added API routes for image, PDF, and video processing
+* Added Swagger UI support
+* Tested APIs successfully through Swagger UI
+* Added virtual environment support
+* Updated `requirements.txt`
+* Added `.gitignore`
+* Organized old files under `old_code`
+* Added S3 scheduler support using the new package structure
+
+---
+
+## Limitations
+
+* OCR accuracy depends on the quality of the input file
+* Low-resolution images may produce incorrect text
+* Video OCR may take more time for longer videos
+* Some extracted text may contain spelling or formatting errors
+* Scanned PDF processing requires Tesseract and Poppler setup
+
+---
+
+## Future Enhancements
+
+* Add Pytest unit tests
+* Generate test coverage report using pytest-cov
+* Add benchmarking using pytest-benchmark and timeit
+* Add GitHub Actions for automatic build and testing
+* Deploy the application using AWS App Runner
+* Create AWS CloudFormation templates
+* Improve OCR accuracy using better preprocessing
+* Add a simple Streamlit frontend
+* Explore EasyOCR or AWS Textract for improved OCR accuracy
+
+---
+
+## Screenshots
+
+### FastAPI Swagger UI
+
+```text
+screenshots/swagger_ui.png
+```
+
+### Image API Output
+
+```text
+screenshots/image_api_output.png
+```
+
+### PDF API Output
+
+```text
+screenshots/pdf_api_output.png
+```
+
+### Video API Output
+
+```text
+screenshots/video_api_output.png
+```
+
+### AWS S3 Input
+
+```text
+screenshots/s3_input.png
+```
+
+### AWS S3 Output
+
+```text
+screenshots/s3_output.png
+```
+
+### Scheduler Execution
+
+```text
+screenshots/scheduler.png
+```
+
+---
+
+## Learning Outcome
+
+Through this project, I learned how to build a backend OCR processing system using Python. I also understood how to organize code into a package structure, expose APIs using FastAPI, test APIs using Swagger UI, manage dependencies using a virtual environment, and connect the workflow with AWS S3 automation.
+
+This project helped me understand how separate Python scripts can be converted into a more structured and maintainable backend application.
+
+---
+
+## Author
 
 **Vedanti Hattarki**

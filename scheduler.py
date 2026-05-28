@@ -2,27 +2,36 @@ import os
 import time
 from datetime import datetime
 
-from config import (
+from app.core.config import (
     INPUT_BUCKET,
     INPUT_PREFIX,
     OUTPUT_PREFIX,
     PROCESSED_PREFIX
 )
 
-from s3_service.s3_client import get_s3_client
-from s3_service.download import download_file_from_s3
-from s3_service.upload import upload_file_to_s3
-from classifier import classify_file
+from app.services.s3_service import (
+    get_s3_client,
+    download_file_from_s3,
+    upload_file_to_s3
+)
 
-from digitalpdf_to_text.pdf_to_text import extract_text_from_pdf
-from image_to_text.image_to_text import extract_text_from_image
-from video_to_text.video_to_text import extract_text_from_video
+
+
+from app.services.classifier_service import classify_file
+from app.services.pdf_service import extract_text_from_pdf
+from app.services.image_service import extract_text_from_image
+from app.services.video_service import extract_text_from_video
 
 
 TEMP_FOLDER = "temp"
 
+os.makedirs(TEMP_FOLDER, exist_ok=True)
+
 
 def list_input_files():
+    """
+    List all files available in the S3 input folder.
+    """
     s3 = get_s3_client()
 
     response = s3.list_objects_v2(
@@ -44,21 +53,26 @@ def list_input_files():
     return files
 
 
-def process_file(local_file_path, file_type):
+def process_file(local_file_path: str, file_type: str) -> str:
+    """
+    Route the downloaded file to the correct OCR service.
+    """
     if file_type in ["pdf", "digital_pdf", "image_pdf"]:
         return extract_text_from_pdf(local_file_path)
 
-    elif file_type == "image":
+    if file_type == "image":
         return extract_text_from_image(local_file_path)
 
-    elif file_type == "video":
+    if file_type == "video":
         return extract_text_from_video(local_file_path)
 
-    else:
-        return f"Unsupported file type: {file_type}"
+    return f"Unsupported file type: {file_type}"
 
 
-def move_file_to_processed(s3_key):
+def move_file_to_processed(s3_key: str) -> str:
+    """
+    Move processed file from input folder to processed folder in S3.
+    """
     s3 = get_s3_client()
 
     file_name = os.path.basename(s3_key)
@@ -81,7 +95,10 @@ def move_file_to_processed(s3_key):
     return processed_key
 
 
-def handle_s3_file(s3_key):
+def handle_s3_file(s3_key: str):
+    """
+    Download, classify, process, upload output, and move original file.
+    """
     print(f"\nNew file found: {s3_key}")
 
     file_name = os.path.basename(s3_key)
@@ -90,7 +107,6 @@ def handle_s3_file(s3_key):
     download_file_from_s3(s3_key, local_file_path)
 
     file_type = classify_file(local_file_path)
-    print(f"DEBUG FILE TYPE: {file_type}")
     print(f"Detected file type: {file_type}")
 
     extracted_text = process_file(local_file_path, file_type)
@@ -105,13 +121,16 @@ def handle_s3_file(s3_key):
     output_s3_key = OUTPUT_PREFIX + output_file_name
     upload_file_to_s3(local_output_path, output_s3_key)
 
-    move_file_to_processed(s3_key)
+    processed_key = move_file_to_processed(s3_key)
 
     print(f"Output uploaded to: {output_s3_key}")
-    print(f"Input moved to processed folder")
+    print(f"Input moved to processed folder: {processed_key}")
 
 
 def monitor_s3_folder():
+    """
+    Continuously monitor the S3 input folder every 60 seconds.
+    """
     print("Scheduler started...")
     print(f"Monitoring S3 folder: s3://{INPUT_BUCKET}/{INPUT_PREFIX}")
 

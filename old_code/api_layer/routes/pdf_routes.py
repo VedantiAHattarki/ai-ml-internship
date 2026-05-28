@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
-from api_layer.utils.request_handler import save_uploaded_file
-from digitalpdf_to_text.pdf_to_text import extract_text_from_pdf
+from app.utils.file_utils import save_uploaded_file
+from app.services.pdf_service import extract_text_from_pdf
 
 pdf_bp = Blueprint("pdf", __name__)
 

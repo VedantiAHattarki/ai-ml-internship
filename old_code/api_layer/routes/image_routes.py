@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
-from api_layer.utils.request_handler import save_uploaded_file
-from image_to_text.image_to_text import extract_text_from_image
+from app.utils.file_utils import save_uploaded_file
+from app.services.image_service import extract_text_from_image
 
 image_bp = Blueprint("image", __name__)
 

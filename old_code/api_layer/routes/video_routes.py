@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
-from api_layer.utils.request_handler import save_uploaded_file
-from video_to_text.video_to_text import extract_text_from_video
+from app.utils.file_utils import save_uploaded_file
+from app.services.video_service import extract_text_from_video
 
 video_bp = Blueprint("video", __name__)
 
