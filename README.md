@@ -2,138 +2,35 @@
 
 ## OCR File Processing and Automation System
 
-This project is an end-to-end **OCR (Optical Character Recognition) automation system** built as part of my AI/ML internship work. The system processes **PDF files, image files, and video files** and extracts readable text from them.
+This project is an end-to-end **OCR (Optical Character Recognition) Automation System** that processes **PDFs, Images, and Videos** to extract text.
 
-The project was initially developed as separate OCR programs and Flask APIs. It has now been upgraded into a clean **FastAPI-based Python package** with a modular structure, Swagger UI support, virtual environment dependency management, and reusable service layers.
+The system is designed using:
 
----
+* **Flask APIs** is an API built using Flask(a Python Framework) that allows users or systems to send and get responses over the internet.In this project it is used for exposing the functionalities using REST(**Representational State Transfer** - A standard way of communicating over the internet using HTTP).
 
-## Overview
+* **AWS S3** is a service used to store and retrieve files (data) over the internet. In this project AWS S3 is used to store input and output files in a sclable, reliable and cloud-based storage system that enables automated processing workflows.
 
-The main purpose of this project is to automate text extraction from different file formats using OCR and backend APIs.
+* **Scheduler** is a program that runs tasks automatically at regular intervals. In this project it is used to monitor S3 input folder for regular intervals of time if any new files are found then processes the files automatically and stores the output in output folder and sends the input file to processed file after processing (automated processing).
 
-The system can process:
+* **Classifier** is a component that identifies or categorizes input into different types.In this project it is used for intelligent file handling. When new file is uploaded in AWS S3, classifier identifies it and decides it is pdf, image or video and classifies accordingly.
 
-* Digital PDFs
-* Scanned PDFs
-* Images
-* Videos
-
-It also includes support for AWS S3-based automation, where files can be uploaded to an input folder, processed automatically, and moved to output and processed folders.
-
-This project simulates a real-world backend workflow where files are uploaded, classified, processed, and stored in a structured way.
+It simulates a real-world backend system where files are automatically processed and results are stored in the cloud.
 
 ---
 
-## Completed Work
+## Key Features
 
-### 1. FastAPI Package Structure
-
-The OCR programs were merged into a single Python package instead of keeping them as separate files.
-
-The project is now organized into:
-
-* `api` layer for FastAPI routes
-* `services` layer for OCR and processing logic
-* `utils` layer for helper functions
-* `core` layer for configuration
-
-This makes the code cleaner, reusable, and easier to maintain.
-
----
-
-### 2. FastAPI APIs with Swagger UI
-
-The image, PDF, and video OCR functionalities are exposed as REST APIs using FastAPI.
-
-Swagger UI is available at:
-
-```text
-http://127.0.0.1:8000/docs
-```
-
-Using Swagger UI, the APIs can be tested directly from the browser without using Postman.
-
-Available APIs:
-
-```text
-GET  /api/health
-POST /api/image/process
-POST /api/pdf/process
-POST /api/video/process
-```
-
----
-
-### 3. Virtual Environment Support
-
-A virtual environment is used to manage all Python dependencies for the project.
-
-This helps keep project dependencies separate from the global Python installation.
-
-The dependency list is maintained in:
-
-```text
-requirements.txt
-```
-
-The `.venv/` folder is ignored using `.gitignore`, so only the dependency list is pushed to GitHub.
-
----
-
-### 4. OCR Processing
-
-The project supports OCR processing for multiple file types.
-
-For images:
-
-* OpenCV is used for preprocessing
-* PyTesseract is used for text extraction
-
-For PDFs:
-
-* PyMuPDF is used for digital PDF text extraction
-* PDF2Image and PyTesseract are used for scanned PDF OCR
-
-For videos:
-
-* OpenCV is used to read video frames
-* PyTesseract is used to extract text from selected frames
-* Duplicate and noisy text is filtered to improve the output
-
----
-
-### 5. AWS S3 Automation
-
-The project also supports AWS S3-based automation.
-
-The S3 workflow is:
-
-```text
-File uploaded to input/
-        ↓
-Scheduler detects the file
-        ↓
-Classifier identifies file type
-        ↓
-Correct OCR service is called
-        ↓
-Extracted text is saved as output
-        ↓
-Output file is uploaded to output/
-        ↓
-Original file is moved to processed/
-```
-
-S3 folder structure:
-
-```text
-ai-ml-project-bucket/
-│
-├── input/
-├── output/
-└── processed/
-```
+* Extract text from:
+  * Digital PDFs
+  * Images
+  * Videos
+*  REST APIs using Flask
+*  API testing using Postman
+*  AWS S3 integration (input/output automation)
+*  Scheduler to monitor S3 folder
+*  Intelligent file classifier
+*  Improved video OCR (duplicate removal + noise filtering)
+*  Clean and structured output generation
 
 ---
 
