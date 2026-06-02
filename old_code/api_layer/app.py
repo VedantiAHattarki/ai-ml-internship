@@ -1,7 +1,7 @@
 from flask import Flask
-from api_layer.routes.pdf_routes import pdf_bp
-from api_layer.routes.image_routes import image_bp
-from api_layer.routes.video_routes import video_bp
+from old_code.api_layer.routes.pdf_routes import pdf_bp
+from old_code.api_layer.routes.image_routes import image_bp
+from old_code.api_layer.routes.video_routes import video_bp
 
 app = Flask(__name__)
 

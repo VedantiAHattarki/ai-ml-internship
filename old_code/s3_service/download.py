@@ -1,6 +1,6 @@
 import os
-from s3_service.s3_client import get_s3_client
-from config import INPUT_BUCKET
+from old_code.s3_service.s3_client import get_s3_client
+from app.core.config import INPUT_BUCKET
 
 def download_file_from_s3(s3_key, local_path):
     s3 = get_s3_client()
