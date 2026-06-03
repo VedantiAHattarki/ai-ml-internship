@@ -208,9 +208,9 @@ Steps:
 
 Add your screenshot here:
 
-```markdown
-![Local Swagger UI](previous_task_screenshots/FastAPI_Swagger_UI.jpeg)
-```
+
+![Local Swagger UI](./previous_task_screenshots/FastAPI_Swagger_UI.jpeg)
+
 
 ---
 
@@ -245,7 +245,7 @@ http://localhost:8000/docs
 ### Docker Running Screenshot
 
 
-![Docker Running](final_deployment_screenshots/01_docker_running_local.jpeg)
+![Docker Running](f./inal_deployment_screenshots/01_docker_running_local.jpeg)
 
 
 ---
@@ -348,7 +348,7 @@ latest
 
 ### ECR Image Screenshot
 
-![ECR Latest Image](final_deployment_screenshots/02_ecr_latest_image.jpeg)
+![ECR Latest Image](./final_deployment_screenshots/02_ecr_latest_image.jpeg)
 
 
 ---
@@ -405,14 +405,14 @@ The deployed application returned the following success response:
 ### Deployed Application Screenshot
 
 
-![Deployed App Success](final_deployment_screenshots/03_deployed_app_success.jpeg)
+![Deployed App Success](./final_deployment_screenshots/03_deployed_app_success.jpeg)
 
 
 ### Deployed Swagger UI Screenshot
 
 
-![Deployed Swagger UI](final_deployment_screenshots/04_deployed_swagger_ui.jpeg)
-![Deployed Swagger UI and OCR API Outputs](final_deployment_screenshots/04_1_deployed_swagger_UI_output.jpeg)
+![Deployed Swagger UI](./final_deployment_screenshots/04_deployed_swagger_ui.jpeg)
+![Deployed Swagger UI and OCR API Outputs](./final_deployment_screenshots/04_1_deployed_swagger_UI_output.jpeg)
 
 
 ---
@@ -436,13 +436,13 @@ CREATE_COMPLETE
 ### CloudFormation Stack Screenshot
 
 
-![CloudFormation CREATE_COMPLETE](final_deployment_screenshots/05_cloudformation_create_complete.jpeg)
+![CloudFormation CREATE_COMPLETE](./final_deployment_screenshots/05_cloudformation_create_complete.jpeg)
 
 
 ### CloudFormation Output Screenshot
 
 
-![CloudFormation Output URL](final_deployment_screenshots/06_cloudformation_outputs_url.jpeg)
+![CloudFormation Output URL](./final_deployment_screenshots/06_cloudformation_outputs_url.jpeg)
 
 
 ---
