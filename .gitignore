@@ -34,8 +34,6 @@ outputs/
 
 # Image/PDF sample files if you do not want to push them
 *.jpg
-*.jpeg
-*.png
 *.pdf
 
 # OS files
