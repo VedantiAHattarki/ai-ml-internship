@@ -206,10 +206,9 @@ Steps:
 
 ### Local Swagger UI Screenshot
 
-Add your screenshot here:
 
 
-![Local Swagger UI](./previous_task_screenshots/FastAPI_Swagger_UI.jpeg)
+![Local Swagger UI](./final_deployment_screenshots/01_docker_running_local.jpeg)
 
 
 ---
