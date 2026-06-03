@@ -513,23 +513,6 @@ It helps automate:
 
 ---
 
-## Screenshots Included
-
-The following screenshots are included as proof of project completion:
-
-| Screenshot                              | Description                             |
-| --------------------------------------- | --------------------------------------- |
-| `01_docker_running_local.png`           | Docker container running locally        |
-| `02_local_swagger_ui.png`               | Local FastAPI Swagger UI                |
-| `03_ecr_latest_image.png`               | Docker image pushed to ECR              |
-| `04_cloudformation_create_complete.png` | CloudFormation stack status             |
-| `05_cloudformation_outputs_url.png`     | App Runner public URL from stack output |
-| `06_apprunner_running_status.png`       | App Runner service running              |
-| `07_deployed_app_success.png`           | Deployed API success response           |
-| `08_deployed_swagger_ui.png`            | Deployed Swagger UI                     |
-
----
-
 ## Troubleshooting Notes
 
 ### 1. Invalid Template Path
