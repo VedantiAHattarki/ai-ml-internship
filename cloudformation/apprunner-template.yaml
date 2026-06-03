@@ -1,0 +1,51 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Deploy FastAPI OCR application using AWS App Runner
+
+Parameters:
+  ServiceName:
+    Type: String
+    Default: fastapi-ocr-app
+
+  ImageIdentifier:
+    Type: String
+    Description: Full ECR image URI, for example 123456789012.dkr.ecr.ap-south-1.amazonaws.com/fastapi-ocr-app:latest
+
+Resources:
+  AppRunnerECRAccessRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub "${ServiceName}-ecr-access-role"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: build.apprunner.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSAppRunnerServicePolicyForECRAccess
+
+  AppRunnerService:
+    Type: AWS::AppRunner::Service
+    Properties:
+      ServiceName: !Ref ServiceName
+      SourceConfiguration:
+        AuthenticationConfiguration:
+          AccessRoleArn: !GetAtt AppRunnerECRAccessRole.Arn
+        AutoDeploymentsEnabled: false
+        ImageRepository:
+          ImageIdentifier: !Ref ImageIdentifier
+          ImageRepositoryType: ECR
+          ImageConfiguration:
+            Port: "8000"
+            RuntimeEnvironmentVariables:
+              - Name: TESSERACT_CMD
+                Value: /usr/bin/tesseract
+      InstanceConfiguration:
+        Cpu: "1 vCPU"
+        Memory: "2 GB"
+
+Outputs:
+  AppRunnerServiceUrl:
+    Description: Public URL of the App Runner service
+    Value: !GetAtt AppRunnerService.ServiceUrl

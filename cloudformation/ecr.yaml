@@ -1,0 +1,15 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: ECR repository for FastAPI OCR App
+
+Resources:
+  FastApiOcrRepository:
+    Type: AWS::ECR::Repository
+    Properties:
+      RepositoryName: fastapi-ocr-app
+      ImageScanningConfiguration:
+        ScanOnPush: true
+
+Outputs:
+  RepositoryUri:
+    Description: URI of the ECR repository
+    Value: !GetAtt FastApiOcrRepository.RepositoryUri

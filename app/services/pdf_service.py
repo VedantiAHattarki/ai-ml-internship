@@ -3,11 +3,13 @@ import fitz  # PyMuPDF
 import cv2
 import numpy as np
 import pytesseract
+import shutil
 from pdf2image import convert_from_path
 
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+TESSERACT_CMD = os.getenv("TESSERACT_CMD") or shutil.which("tesseract") or r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+pytesseract.pytesseract.tesseract_cmd = TESSERACT_CMD
 
-POPPLER_PATH = r"C:\Users\hatta\Downloads\Release-25.12.0-0\poppler-25.12.0\Library\bin"
+POPPLER_PATH = os.getenv("POPPLER_PATH") or None
 
 
 def clean_text(text: str) -> str:

@@ -1,517 +1,665 @@
-# AI-ML Internship Project
+# Case Intake Processor
 
-## OCR File Processing and Automation System
-
-This project is an end-to-end **OCR (Optical Character Recognition) File Processing and Automation System** developed as part of my AI/ML internship work.
-
-The main goal of this project is to extract text from different types of files such as **PDFs, images, and videos** using OCR techniques. The project was initially developed as separate Python programs and later upgraded into a structured **FastAPI-based Python package** with Swagger UI support.
-
-The system currently supports:
-
-* Image to text extraction
-* PDF to text extraction
-* Video to text extraction
-* API testing using Swagger UI
-* Virtual environment-based dependency management
-* AWS S3-based file processing workflow
-* Scheduler-based automation
-* File classification for routing files to the correct OCR service
+A FastAPI-based OCR application developed during an AI/ML internship to extract text from **PDFs, images, and videos**.
+The project includes local API development, Swagger UI testing, Docker containerization, AWS ECR image storage, and AWS App Runner deployment using CloudFormation.
 
 ---
 
-## Overview
+## Project Objective
 
-In the earlier version, the OCR programs were written separately for images, PDFs, and videos. Later, these programs were arranged into a proper Python package structure and exposed as REST APIs using FastAPI.
+The main objective of this project is to build an OCR-based API system that can process different file types and extract readable text using Python-based OCR techniques.
 
-FastAPI provides automatic API documentation through Swagger UI, which allows the APIs to be tested directly from the browser without using Postman.
-
-This project simulates a real-world backend automation system where files can be uploaded, processed, classified, and stored in an organized way.
+The project was developed step by step, starting from basic OCR scripts and later converted into a structured FastAPI application. The final version was containerized using Docker and deployed on AWS App Runner using CloudFormation templates.
 
 ---
 
-## Completed Work Till Date
+## Key Features
 
-### 1. FastAPI Package Structure
-
-The separate OCR programs were merged into a single modular Python package.
-
-The project is now organized into:
-
-* `api` layer for FastAPI route files
-* `services` layer for OCR processing logic
-* `utils` layer for helper functions
-* `core` layer for configuration files
-
-This makes the project easier to understand, maintain, and extend.
+* Extracts text from digital and scanned PDF files
+* Extracts text from image files
+* Extracts text from video frames
+* Provides REST API endpoints using FastAPI
+* Includes Swagger UI for easy API testing
+* Supports Docker-based containerization
+* Stores Docker image in Amazon ECR
+* Deploys application using AWS App Runner
+* Uses AWS CloudFormation for infrastructure deployment
+* Includes testing support using Pytest and coverage tools
 
 ---
 
-### 2. FastAPI APIs and Swagger UI
+## Technology Stack
 
-The OCR functionalities are exposed using FastAPI APIs.
-
-Swagger UI is available at:
-
-```text
-http://127.0.0.1:8000/docs
-```
-
-Current API endpoints:
-
-```text
-GET  /api/health
-POST /api/image/process
-POST /api/pdf/process
-POST /api/video/process
-```
-
-All image, PDF, and video APIs were tested successfully using Swagger UI.
+| Category             | Tools / Technologies                        |
+| -------------------- | ------------------------------------------- |
+| Programming Language | Python                                      |
+| API Framework        | FastAPI                                     |
+| API Server           | Uvicorn                                     |
+| OCR Engine           | Tesseract OCR                               |
+| Image Processing     | OpenCV, Pillow                              |
+| PDF Processing       | PyMuPDF, pdf2image, Poppler                 |
+| Cloud Services       | AWS ECR, AWS App Runner, AWS CloudFormation |
+| Containerization     | Docker                                      |
+| Testing              | Pytest, pytest-cov, pytest-benchmark        |
+| Automation           | GitHub Actions                              |
+| Version Control      | Git, GitHub                                 |
 
 ---
 
-### 3. Image OCR
-
-The image OCR service extracts text from image files such as JPG, JPEG, and PNG.
-
-The image processing flow includes:
-
-* Reading the uploaded image
-* Converting the image to grayscale
-* Resizing the image for better OCR accuracy
-* Applying Gaussian blur
-* Applying adaptive thresholding
-* Extracting text using PyTesseract OCR
-* Returning the extracted text through the API response
-
----
-
-### 4. PDF OCR
-
-The PDF OCR service supports both digital PDFs and scanned PDFs.
-
-For digital PDFs:
-
-* PyMuPDF is used to extract text directly from the PDF.
-
-For scanned PDFs:
-
-* PDF2Image converts PDF pages into images.
-* OpenCV preprocesses the image pages.
-* PyTesseract extracts text from each page.
-
-This allows the system to handle both text-based and image-based PDF files.
-
----
-
-### 5. Video OCR
-
-The video OCR service extracts visible text from video frames.
-
-The video processing flow includes:
-
-* Reading the uploaded video using OpenCV
-* Selecting frames at fixed intervals
-* Preprocessing each selected frame
-* Extracting text using PyTesseract
-* Removing duplicate and noisy text
-* Returning the final cleaned text
-
-This helps reduce repeated text and improves the readability of video OCR output.
-
----
-
-### 6. Virtual Environment Support
-
-A virtual environment is used to manage all Python dependencies.
-
-The `.venv/` folder is used locally and is not pushed to GitHub.
-
-All required packages are stored in:
-
-```text
-requirements.txt
-```
-
-This allows the project to be set up easily on another system using:
-
-```bash
-python -m pip install -r requirements.txt
-```
-
----
-
-### 7. AWS S3 and Scheduler Support
-
-The project also includes AWS S3-based automation.
-
-The scheduler monitors the S3 input folder. When a new file is found, it downloads the file, classifies it, processes it using the correct OCR service, uploads the output text file to S3, and moves the original file to the processed folder.
-
-S3 workflow:
-
-```text
-File uploaded to input/
-        ↓
-Scheduler detects the file
-        ↓
-Classifier identifies the file type
-        ↓
-Correct OCR service is called
-        ↓
-Extracted text is generated
-        ↓
-Output file is uploaded to output/
-        ↓
-Original file is moved to processed/
-```
-
-S3 folder structure:
-
-```text
-ai-ml-project-bucket/
-│
-├── input/
-├── output/
-└── processed/
-```
-
----
-
-## Project Structure
+## Final Project Structure
 
 ```text
 ai-ml-internship/
 │
 ├── app/
-│   ├── __init__.py
 │   ├── main.py
-│
 │   ├── api/
-│   │   ├── __init__.py
-│   │   ├── routes_health.py
-│   │   ├── routes_image.py
-│   │   ├── routes_pdf.py
-│   │   └── routes_video.py
-│
-│   ├── core/
-│   │   ├── __init__.py
-│   │   └── config.py
-│
 │   ├── services/
-│   │   ├── __init__.py
-│   │   ├── image_service.py
-│   │   ├── pdf_service.py
-│   │   ├── video_service.py
-│   │   ├── classifier_service.py
-│   │   └── s3_service.py
+│   ├── utils/
+│   └── core/
 │
-│   └── utils/
-│       ├── __init__.py
-│       └── file_utils.py
+├── cloudformation/
+│   ├── ecr.yaml
+│   └── apprunner-template.yaml
+│
+├── .github/
+│   └── workflows/
 │
 ├── old_code/
-│   └── previous Flask and standalone OCR files
-│
 ├── sample_files/
-│   ├── images/
-│   ├── pdfs/
-│   └── videos/
-│
 ├── screenshots/
-├── temp/
 ├── tests/
 │
-├── scheduler.py
-├── run.py
+├── Dockerfile
+├── .dockerignore
+├── .gitignore
+├── pytest.ini
 ├── requirements.txt
-├── README.md
-└── .gitignore
+├── run.py
+├── scheduler.py
+└── README.md
 ```
+
+### Folder Explanation
+
+| Folder / File        | Purpose                                     |
+| -------------------- | ------------------------------------------- |
+| `app/`               | Final FastAPI application package           |
+| `app/api/`           | API route files                             |
+| `app/services/`      | OCR processing logic                        |
+| `app/utils/`         | Helper functions                            |
+| `cloudformation/`    | AWS deployment templates                    |
+| `.github/workflows/` | GitHub Actions workflow files               |
+| `old_code/`          | Earlier development versions and trial code |
+| `sample_files/`      | Sample PDFs, images, or videos for testing  |
+| `screenshots/`       | Output and deployment proof screenshots     |
+| `tests/`             | Test cases for the application              |
+| `Dockerfile`         | Docker image configuration                  |
+| `scheduler.py`       | Earlier S3 automation scheduler task        |
+| `requirements.txt`   | Python dependencies                         |
 
 ---
 
-## Technologies Used
+## System Requirements
 
-* Python
-* FastAPI
-* Swagger UI
-* Uvicorn
-* OpenCV
-* PyTesseract OCR
-* PyMuPDF
-* PDF2Image
-* NumPy
-* Pillow
-* AWS S3
-* Boto3
-* Python Dotenv
-* Schedule
+Before running this project, the following software should be installed:
+
+### Required Installations
+
+1. **Python 3.10 or above**
+2. **Tesseract OCR**
+3. **Poppler**
+4. **Docker Desktop**
+5. **AWS CLI**
+6. **Git**
 
 ---
 
-## FastAPI Workflow
-
-```text
-User uploads a file through Swagger UI
-        ↓
-FastAPI route receives the uploaded file
-        ↓
-File is saved temporarily in temp/
-        ↓
-Related OCR service function is called
-        ↓
-OCR processing is performed
-        ↓
-Extracted text is returned as JSON response
-```
-
-Example API response:
-
-```json
-{
-  "status": "success",
-  "filename": "sample.pdf",
-  "file_type": "pdf",
-  "extracted_text": "Extracted text appears here"
-}
-```
-
----
-
-
-
-## How to Run the Project
+## Local Setup
 
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/VedantiAHattarki/ai-ml-internship.git
+git clone https://github.com/your-username/ai-ml-internship.git
 cd ai-ml-internship
 ```
 
----
-
-### 2. Create a Virtual Environment
-
-```bash
-python -m venv .venv
-```
+Replace `your-username` with your actual GitHub username.
 
 ---
 
-### 3. Activate the Virtual Environment
+### 2. Create and Activate Virtual Environment
 
 For Windows PowerShell:
 
 ```powershell
-.\.venv\Scripts\Activate.ps1
-```
-
-After activation, the terminal should show:
-
-```text
-(.venv)
+python -m venv .venv
+.venv\Scripts\activate
 ```
 
 ---
 
-### 4. Install Dependencies
+### 3. Install Dependencies
 
 ```bash
-python -m pip install -r requirements.txt
+pip install --upgrade pip
+pip install -r requirements.txt
 ```
 
 ---
 
-### 5. Run the FastAPI Application
+### 4. Run the FastAPI Application
+
+```bash
+uvicorn app.main:app --reload
+```
+
+Or:
 
 ```bash
 python run.py
 ```
 
-If the application starts successfully, the terminal will show:
+---
+
+### 5. Open Application Locally
+
+Root endpoint:
 
 ```text
-Uvicorn running on http://127.0.0.1:8000
+http://127.0.0.0:8000
+```
+
+Swagger UI:
+
+```text
+http://127.0.0.0:8000/docs
 ```
 
 ---
 
-### 6. Open Swagger UI
+## API Endpoints
 
-Open this URL in the browser:
+| Method | Endpoint             | Description                       |
+| ------ | -------------------- | --------------------------------- |
+| GET    | `/`                  | Checks whether the API is running |
+| GET    | `/api/health`        | Health check endpoint             |
+| POST   | `/api/pdf/process`   | Extracts text from PDF files      |
+| POST   | `/api/image/process` | Extracts text from image files    |
+| POST   | `/api/video/process` | Extracts text from video files    |
 
-```text
-http://127.0.0.1:8000/docs
+---
+
+## Swagger UI Testing
+
+Swagger UI is used to test all API endpoints directly from the browser.
+
+Steps:
+
+1. Start the FastAPI server.
+2. Open `http://127.0.0.1:8000/docs`.
+3. Select the required endpoint.
+4. Click **Try it out**.
+5. Upload a PDF, image, or video file.
+6. Click **Execute**.
+7. View the extracted text response.
+
+### Local Swagger UI Screenshot
+
+Add your screenshot here:
+
+```markdown
+![Local Swagger UI](previous_task_screenshots/FastAPI_Swagger_UI.jpeg)
 ```
 
 ---
 
-## Testing APIs in Swagger UI
+## Docker Setup
 
-1. Open Swagger UI.
-2. Select the API endpoint.
-3. Click `Try it out`.
-4. Upload a file if the endpoint requires it.
-5. Click `Execute`.
-6. Check the response body.
+Docker is used to containerize the FastAPI OCR application so that it can run consistently in any environment.
 
-This allows the image, PDF, and video APIs to be tested directly from the browser.
-
----
-
-## Running the Scheduler
-
-The scheduler is used for AWS S3 automation.
-
-Run:
+### 1. Build Docker Image
 
 ```bash
-python scheduler.py
+docker build -t fastapi-ocr-app .
 ```
 
-The scheduler monitors the S3 input folder and automatically processes new files.
+### 2. Run Docker Container
 
----
-
-## Environment Variables
-
-The project uses a `.env` file for configuration.
-
-Example `.env` file:
-
-```env
-AWS_REGION=ap-south-1
-INPUT_BUCKET=ai-ml-project-bucket
-OUTPUT_BUCKET=ai-ml-project-bucket
-INPUT_PREFIX=input/
-OUTPUT_PREFIX=output/
-PROCESSED_PREFIX=processed/
-TEMP_FOLDER=temp
+```bash
+docker run -p 8000:8000 fastapi-ocr-app
 ```
 
-If AWS credentials are needed locally:
+### 3. Open Dockerized Application
 
-```env
-AWS_ACCESS_KEY_ID=your_access_key
-AWS_SECRET_ACCESS_KEY=your_secret_key
+```text
+http://localhost:8000
 ```
 
-The `.env` file should not be pushed to GitHub.
+Swagger UI:
+
+```text
+http://localhost:8000/docs
+```
+
+### Docker Running Screenshot
+
+```markdown
+![Docker Running](final_deployment_screenshots/01_docker_running_local.jpeg)
+```
 
 ---
 
-## Classifier Logic
+## AWS Deployment Overview
 
-The classifier identifies the uploaded file type based on its extension and PDF content.
+The final application was deployed on AWS using the following flow:
 
-It supports:
+```text
+FastAPI Application
+        ↓
+Docker Image
+        ↓
+Amazon ECR
+        ↓
+AWS App Runner
+        ↓
+Public API URL
+```
 
-* Digital PDF
-* Scanned PDF
-* Image
-* Video
-* Unknown file type
-
-Based on the classification result, the file is routed to the correct OCR service.
-
----
-
-## Output
-
-The extracted text is returned through the API response.
-
-For S3 automation, the extracted text is saved as a `.txt` file and uploaded to the S3 `output/` folder.
+CloudFormation was used to automate the creation and deployment of AWS resources.
 
 ---
 
-## Screenshots
+## AWS Services Used
 
-###  API Testing (Postman)
+### 1. Amazon ECR
 
-### process-pdf
+Amazon Elastic Container Registry was used to store the Docker image of the FastAPI OCR application.
 
-![Postman](screenshots/postman_pdf_preview.png)
+### 2. AWS App Runner
 
-### process-image
+AWS App Runner was used to deploy and run the containerized FastAPI application as a public web service.
 
-![Postman](screenshots/postman_image_preview.png)
+### 3. AWS CloudFormation
 
-### process-video
-
-![Postman](screenshots/postman_video_preview.png)
-
-###  AWS S3 Input
-
-![S3 Input](screenshots/s3_input.png)
-
-###  AWS S3 Output
-
-![S3 Output](screenshots/s3_output.png)
-
-###  Scheduler Execution
-
-![Scheduler](screenshots/scheduler.png)
-
-### AWS S3 Processed
-
-![S3 Processed](screenshots/s3_processed.png)
-
-### FastAPI Swagger UI
-![FastAPI Swagger UI](screenshots/FastAPI_Swagger_UI.jpeg)
-
-
+CloudFormation templates were used to define and create AWS resources in an automated and repeatable way.
 
 ---
 
-## Current Status
+## AWS Deployment Steps
 
-Completed:
+### Step 1: Create ECR Repository
 
-* Converted old OCR programs into a modular FastAPI package
-* Added API routes for image, PDF, and video processing
-* Added a health check API
-* Added Swagger UI support
-* Tested image, PDF, and video APIs successfully through Swagger UI
-* Added virtual environment support
-* Updated `requirements.txt`
-* Added `.gitignore`
-* Organized old files under `old_code`
-* Added S3 scheduler support using the new package structure
+CloudFormation template used:
 
----
+```text
+cloudformation/ecr.yaml
+```
 
-## Limitations
+Command:
 
-* OCR accuracy depends on the quality of the input file
-* Low-resolution images may produce incorrect text
-* Video OCR may take more time for longer videos
-* Some extracted text may contain spelling or formatting errors
-* Scanned PDF processing requires Tesseract and Poppler setup
+```powershell
+aws cloudformation deploy --template-file cloudformation/ecr.yaml --stack-name fastapi-ocr-ecr-stack --region ap-south-1
+```
+
+This creates the ECR repository:
+
+```text
+fastapi-ocr-app
+```
 
 ---
 
-## Future Enhancements
+### Step 2: Build Docker Image
 
-* Add Pytest unit tests
-* Generate test coverage report using pytest-cov
-* Add benchmarking using pytest-benchmark and timeit
-* Add GitHub Actions for automatic build and testing
-* Deploy the application using AWS App Runner
-* Create AWS CloudFormation templates
-* Improve OCR accuracy using better preprocessing
-* Add a simple Streamlit frontend
-* Explore EasyOCR or AWS Textract for improved OCR accuracy
+```powershell
+docker build -t fastapi-ocr-app .
+```
 
 ---
 
-## Learning Outcome
+### Step 3: Login Docker to ECR
 
-Through this project, I learned how to convert separate Python OCR scripts into a structured backend application. I also learned how to organize code into a package structure, expose OCR functions through FastAPI APIs, test APIs using Swagger UI, manage dependencies using a virtual environment, and connect the workflow with AWS S3 automation.
-
-This project helped me understand how a backend OCR processing system can be designed in a more organized, reusable, and industry-oriented way.
+```powershell
+aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 861638088392.dkr.ecr.ap-south-1.amazonaws.com
+```
 
 ---
+
+### Step 4: Tag Docker Image
+
+```powershell
+docker tag fastapi-ocr-app:latest 861638088392.dkr.ecr.ap-south-1.amazonaws.com/fastapi-ocr-app:latest
+```
+
+---
+
+### Step 5: Push Docker Image to ECR
+
+```powershell
+docker push 861638088392.dkr.ecr.ap-south-1.amazonaws.com/fastapi-ocr-app:latest
+```
+
+After this step, the Docker image is available in Amazon ECR with the tag:
+
+```text
+latest
+```
+
+### ECR Image Screenshot
+
+```markdown
+![ECR Latest Image](final_deployment_screenshots/02_ecr_latest_image.jpeg)
+```
+
+---
+
+### Step 6: Deploy App Runner Using CloudFormation
+
+CloudFormation template used:
+
+```text
+cloudformation/apprunner-template.yaml
+```
+
+Command:
+
+```powershell
+aws cloudformation deploy --template-file cloudformation/apprunner-template.yaml --stack-name fastapi-ocr-apprunner-stack --region ap-south-1 --capabilities CAPABILITY_NAMED_IAM --parameter-overrides ImageIdentifier=861638088392.dkr.ecr.ap-south-1.amazonaws.com/fastapi-ocr-app:latest
+```
+
+This creates the AWS App Runner service and deploys the FastAPI OCR application.
+
+---
+
+### Step 7: Get App Runner Public URL
+
+```powershell
+aws cloudformation describe-stacks --stack-name fastapi-ocr-apprunner-stack --region ap-south-1 --query "Stacks[0].Outputs[0].OutputValue" --output text --no-cli-pager
+```
+
+Deployed URL:
+
+```text
+https://fky2gyewc2.ap-south-1.awsapprunner.com
+```
+
+Swagger UI:
+
+```text
+https://fky2gyewc2.ap-south-1.awsapprunner.com/docs
+```
+
+---
+
+## Deployment Verification
+
+The deployed application returned the following success response:
+
+```json
+{
+  "status": "success",
+  "message": "FastAPI OCR project is running successfully"
+}
+```
+
+### Deployed Application Screenshot
+
+```markdown
+![Deployed App Success](final_deployment_screenshots/03_deployed_app_success.jpeg)
+```
+
+### Deployed Swagger UI Screenshot
+
+```markdown
+![Deployed Swagger UI](final_deployment_screenshots/04_deployed_swagger_ui.jpeg)
+![Deployed Swagger UI and OCR API Outputs](final_deployment_screenshots/04_1_deployed_swagger_UI_output.jpeg)
+```
+
+---
+
+## CloudFormation Verification
+
+The App Runner CloudFormation stack was successfully created.
+
+Stack name:
+
+```text
+fastapi-ocr-apprunner-stack
+```
+
+Final status:
+
+```text
+CREATE_COMPLETE
+```
+
+### CloudFormation Stack Screenshot
+
+```markdown
+![CloudFormation CREATE_COMPLETE](final_deployment_screenshots/05_cloudformation_create_complete.jpeg)
+```
+
+### CloudFormation Output Screenshot
+
+```markdown
+![CloudFormation Output URL](final_deployment_screenshots/06_cloudformation_outputs_url.jpeg)
+```
+
+---
+
+## App Runner Verification
+
+The AWS App Runner service was created successfully and the application was publicly accessible through the App Runner service URL.
+
+Service name:
+
+```text
+fastapi-ocr-app-runner
+```
+
+### App Runner Running Screenshot
+
+```markdown
+![App Runner Running](final_deployment_screenshots/07_apprunner_running_status.png)
+```
+
+---
+
+## Testing
+
+The project supports Pytest for unit testing and coverage checking.
+
+### Run Tests
+
+```bash
+pytest
+```
+
+### Run Tests with Coverage
+
+```bash
+pytest --cov=app
+```
+
+### Generate HTML Coverage Report
+
+```bash
+pytest --cov=app --cov-report=html
+```
+
+The generated report is available inside:
+
+```text
+htmlcov/index.html
+```
+
+---
+
+## GitHub Actions
+
+GitHub Actions is used to automatically check the project when code is pushed to GitHub.
+
+The workflow is available inside:
+
+```text
+.github/workflows/
+```
+
+It helps automate:
+
+* Dependency installation
+* Test execution
+* Build verification
+* Continuous integration checks
+
+---
+
+## Screenshots Included
+
+The following screenshots are included as proof of project completion:
+
+| Screenshot                              | Description                             |
+| --------------------------------------- | --------------------------------------- |
+| `01_docker_running_local.png`           | Docker container running locally        |
+| `02_local_swagger_ui.png`               | Local FastAPI Swagger UI                |
+| `03_ecr_latest_image.png`               | Docker image pushed to ECR              |
+| `04_cloudformation_create_complete.png` | CloudFormation stack status             |
+| `05_cloudformation_outputs_url.png`     | App Runner public URL from stack output |
+| `06_apprunner_running_status.png`       | App Runner service running              |
+| `07_deployed_app_success.png`           | Deployed API success response           |
+| `08_deployed_swagger_ui.png`            | Deployed Swagger UI                     |
+
+---
+
+## Troubleshooting Notes
+
+### 1. Invalid Template Path
+
+If the following error appears:
+
+```text
+Invalid template path
+```
+
+Check whether the template file exists:
+
+```powershell
+dir cloudformation
+```
+
+Use the correct file name:
+
+```text
+cloudformation/apprunner-template.yaml
+```
+
+---
+
+### 2. Stack in ROLLBACK_COMPLETE State
+
+If CloudFormation shows:
+
+```text
+Stack is in ROLLBACK_COMPLETE state and cannot be updated
+```
+
+Delete the failed stack:
+
+```powershell
+aws cloudformation delete-stack --stack-name fastapi-ocr-apprunner-stack --region ap-south-1
+```
+
+Then deploy again.
+
+---
+
+### 3. Parameter Value Missing
+
+If this error appears:
+
+```text
+Parameters: [ImageIdentifier] must have values
+```
+
+Use the correct parameter name:
+
+```text
+ImageIdentifier
+```
+
+---
+
+### 4. Port Mismatch
+
+The application should run on port:
+
+```text
+8000
+```
+
+The Dockerfile and App Runner template should both use port `8000`.
+
+---
+
+## Security Notes
+
+Do not push secret or generated files to GitHub.
+
+Make sure the following files and folders are ignored:
+
+```text
+.env
+.venv/
+AWS credentials
+Access keys
+Secret keys
+__pycache__/
+.pytest_cache/
+.coverage
+htmlcov/
+temp/
+```
+
+---
+
+## Cleanup After Verification
+
+AWS App Runner can create charges while it is running. After mentor verification or final submission, delete the deployed resources.
+
+### Delete App Runner Stack
+
+```powershell
+aws cloudformation delete-stack --stack-name fastapi-ocr-apprunner-stack --region ap-south-1
+```
+
+### Delete ECR Images
+
+Go to:
+
+```text
+AWS Console → ECR → Repositories → fastapi-ocr-app → Images → Delete
+```
+
+### Delete ECR Stack
+
+```powershell
+aws cloudformation delete-stack --stack-name fastapi-ocr-ecr-stack --region ap-south-1
+```
+
+---
+
+
+## Final Summary
+
+This project demonstrates the complete workflow of building and deploying an OCR-based FastAPI application. It includes OCR processing, API development, Docker containerization, AWS ECR image storage, AWS App Runner deployment, and CloudFormation-based infrastructure automation. The final deployed application is accessible through a public App Runner URL and can be tested using Swagger UI.
+
 
 ## Author
 
-**Vedanti Hattarki**
+**Vedanti A Hattarki**  
+AI/ML Intern  
+
+This project was developed as part of an AI/ML internship, focusing on OCR-based text extraction, FastAPI API development, Docker containerization, and AWS App Runner deployment using CloudFormation.
+
+GitHub: [VedantiAHattarki](https://github.com/VedantiAHattarki)

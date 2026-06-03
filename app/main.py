@@ -6,7 +6,7 @@ from app.api import routes_image
 from app.api import routes_video
 
 app = FastAPI(
-    title="AI/ML OCR FastAPI Project",
+    title="Case Intake Processing",
     description="""
     This project provides OCR APIs for:
     

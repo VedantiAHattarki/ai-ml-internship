@@ -1,10 +1,11 @@
 import os
 import cv2
 import pytesseract
+import shutil
 from difflib import SequenceMatcher
 
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
-
+TESSERACT_CMD = os.getenv("TESSERACT_CMD") or shutil.which("tesseract") or r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+pytesseract.pytesseract.tesseract_cmd = TESSERACT_CMD
 
 def clean_text(text: str) -> str:
     lines = text.replace("\x0c", "").splitlines()
