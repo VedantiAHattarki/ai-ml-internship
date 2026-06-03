@@ -244,9 +244,9 @@ http://localhost:8000/docs
 
 ### Docker Running Screenshot
 
-```markdown
+
 ![Docker Running](final_deployment_screenshots/01_docker_running_local.jpeg)
-```
+
 
 ---
 
@@ -348,9 +348,8 @@ latest
 
 ### ECR Image Screenshot
 
-```markdown
 ![ECR Latest Image](final_deployment_screenshots/02_ecr_latest_image.jpeg)
-```
+
 
 ---
 
@@ -405,16 +404,16 @@ The deployed application returned the following success response:
 
 ### Deployed Application Screenshot
 
-```markdown
+
 ![Deployed App Success](final_deployment_screenshots/03_deployed_app_success.jpeg)
-```
+
 
 ### Deployed Swagger UI Screenshot
 
-```markdown
+
 ![Deployed Swagger UI](final_deployment_screenshots/04_deployed_swagger_ui.jpeg)
 ![Deployed Swagger UI and OCR API Outputs](final_deployment_screenshots/04_1_deployed_swagger_UI_output.jpeg)
-```
+
 
 ---
 
@@ -436,15 +435,15 @@ CREATE_COMPLETE
 
 ### CloudFormation Stack Screenshot
 
-```markdown
+
 ![CloudFormation CREATE_COMPLETE](final_deployment_screenshots/05_cloudformation_create_complete.jpeg)
-```
+
 
 ### CloudFormation Output Screenshot
 
-```markdown
+
 ![CloudFormation Output URL](final_deployment_screenshots/06_cloudformation_outputs_url.jpeg)
-```
+
 
 ---
 
@@ -460,9 +459,9 @@ fastapi-ocr-app-runner
 
 ### App Runner Running Screenshot
 
-```markdown
+
 ![App Runner Running](final_deployment_screenshots/07_apprunner_running_status.png)
-```
+
 
 ---
 
