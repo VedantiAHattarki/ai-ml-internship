@@ -208,7 +208,7 @@ Steps:
 
 
 
-![Local Swagger UI](./final_deployment_screenshots/01_docker_running_local.jpeg)
+![Local Swagger UI](./final_deployment_screenshots/01_docker_running_local.png)
 
 
 ---
@@ -244,7 +244,7 @@ http://localhost:8000/docs
 ### Docker Running Screenshot
 
 
-![Docker Running](./final_deployment_screenshots/01_docker_running_local.jpeg)
+![Docker Running](./final_deployment_screenshots/01_docker_running_local.png)
 
 
 ---
