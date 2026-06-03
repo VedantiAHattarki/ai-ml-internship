@@ -245,7 +245,7 @@ http://localhost:8000/docs
 ### Docker Running Screenshot
 
 
-![Docker Running](f./inal_deployment_screenshots/01_docker_running_local.jpeg)
+![Docker Running](./final_deployment_screenshots/01_docker_running_local.jpeg)
 
 
 ---
@@ -460,7 +460,7 @@ fastapi-ocr-app-runner
 ### App Runner Running Screenshot
 
 
-![App Runner Running](final_deployment_screenshots/07_apprunner_running_status.png)
+![App Runner Running](./final_deployment_screenshots/07_apprunner_running_status.jpeg)
 
 
 ---
