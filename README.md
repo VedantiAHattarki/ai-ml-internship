@@ -244,7 +244,7 @@ http://localhost:8000/docs
 ### Docker Running Screenshot
 
 
-![Docker Running](./final_deployment_screenshots/01_docker_running_local.png)
+![Docker Running](./final_deployment_screenshots/08_swagger_UI_output.jpeg)
 
 
 ---
@@ -410,8 +410,8 @@ The deployed application returned the following success response:
 ### Deployed Swagger UI Screenshot
 
 
-![Deployed Swagger UI](./final_deployment_screenshots/04_deployed_swagger_ui.jpeg)
-![Deployed Swagger UI and OCR API Outputs](./final_deployment_screenshots/04_1_deployed_swagger_UI_output.jpeg)
+![Deployed Swagger UI](./final_deployment_screenshots/01_docker_running_local.png)
+![Deployed Swagger UI and OCR API Outputs](./final_deployment_screenshots/08_swagger_UI_output.jpeg)
 
 
 ---
