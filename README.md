@@ -1,235 +1,471 @@
 # Case Intake Processor
 
-A FastAPI-based OCR application developed during an AI/ML internship to extract text from **PDFs, images, and videos**.
-The project includes local API development, Swagger UI testing, Docker containerization, AWS ECR image storage, and AWS App Runner deployment using CloudFormation.
+An end-to-end **OCR-based Case Intake Processor** developed during an AI/ML internship for processing pharmacovigilance case-intake data.
+
+The application accepts **PDF documents, images, and videos**, extracts text using OCR, exposes the processing functionality through a **FastAPI REST API and Swagger UI**, and provides a **React + Vite frontend** for user interaction.
+
+The project was progressively containerized and deployed using **Docker, AWS ECR, AWS App Runner, AWS ECS, AWS EKS, Kubernetes, CloudFormation, Elastic Load Balancing, and Kubernetes Horizontal Pod Autoscaling (HPA)**.
+
+---
+
+## Table of Contents
+
+- [Project Overview](#project-overview)
+- [Project Objective](#project-objective)
+- [Key Features](#key-features)
+- [Application Workflow](#application-workflow)
+- [System Architecture](#system-architecture)
+- [Technology Stack](#technology-stack)
+- [Project Structure](#project-structure)
+- [Backend Application](#backend-application)
+- [Frontend Application](#frontend-application)
+- [OCR Processing](#ocr-processing)
+- [API Endpoints](#api-endpoints)
+- [Swagger UI](#swagger-ui)
+- [Local Development](#local-development)
+- [Dockerization](#dockerization)
+- [Docker Compose](#docker-compose)
+- [Testing](#testing)
+- [CI/CD](#cicd)
+- [AWS ECR](#aws-ecr)
+- [AWS App Runner](#aws-app-runner)
+- [AWS CloudFormation](#aws-cloudformation)
+- [AWS ECS Deployment](#aws-ecs-deployment)
+- [AWS EKS Deployment](#aws-eks-deployment)
+- [Kubernetes Resources](#kubernetes-resources)
+- [Horizontal Pod Autoscaling](#horizontal-pod-autoscaling)
+- [Elastic Load Balancing](#elastic-load-balancing)
+- [Deployment Screenshots](#deployment-screenshots)
+- [Configuration](#configuration)
+- [Troubleshooting](#troubleshooting)
+- [Security and Production Considerations](#security-and-production-considerations)
+- [Future Enhancements](#future-enhancements)
+- [Conclusion](#conclusion)
+
+---
+
+## Project Overview
+
+The **Case Intake Processor** is an OCR application designed to extract text from different types of case-intake files.
+
+The application supports:
+
+- Digital PDFs
+- Scanned PDFs
+- Images
+- Videos
+
+The backend is implemented using **FastAPI** and uses **PyTesseract** and **OpenCV** for OCR and image/frame processing.
+
+The frontend is implemented using **React + Vite** and provides a simple interface for uploading supported files and viewing processing results.
+
+The application was then containerized using Docker and deployed through multiple AWS services to demonstrate cloud deployment, container orchestration, scalability, and load balancing.
 
 ---
 
 ## Project Objective
 
-The main objective of this project is to build an OCR-based API system that can process different file types and extract readable text using Python-based OCR techniques.
+The primary objective of the project was to build and deploy an OCR-based case-intake processing application capable of:
 
-The project was developed step by step, starting from basic OCR scripts and later converted into a structured FastAPI application. The final version was containerized using Docker and deployed on AWS App Runner using CloudFormation templates.
+1. Accepting PDF, image, and video files.
+2. Extracting text from uploaded files using OCR.
+3. Providing REST APIs for each processing operation.
+4. Providing Swagger UI for API testing and documentation.
+5. Providing a web-based React frontend.
+6. Containerizing the backend and frontend using Docker.
+7. Storing Docker images in Amazon ECR.
+8. Deploying the application using AWS App Runner.
+9. Automating AWS infrastructure creation using CloudFormation.
+10. Deploying containerized services on Amazon ECS.
+11. Deploying the application on Amazon EKS using Kubernetes.
+12. Configuring Kubernetes deployments and services.
+13. Implementing Horizontal Pod Autoscaling.
+14. Configuring Elastic Load Balancers for application access.
+15. Testing the application locally and in cloud environments.
 
 ---
 
 ## Key Features
 
-* Extracts text from digital and scanned PDF files
-* Extracts text from image files
-* Extracts text from video frames
-* Provides REST API endpoints using FastAPI
-* Includes Swagger UI for easy API testing
-* Supports Docker-based containerization
-* Stores Docker image in Amazon ECR
-* Deploys application using AWS App Runner
-* Uses AWS CloudFormation for infrastructure deployment
-* Includes testing support using Pytest and coverage tools
+### OCR Processing
+
+- PDF OCR
+- Image OCR
+- Video OCR
+- Processing of scanned documents
+- Text extraction using PyTesseract
+- Image preprocessing using OpenCV
+
+### Backend
+
+- FastAPI REST API
+- Swagger UI
+- Health-check endpoint
+- Separate endpoints for PDF, image, and video processing
+- CORS configuration for frontend communication
+
+### Frontend
+
+- React
+- Vite
+- File upload interface
+- PDF upload
+- Image upload
+- Video upload
+- Display of processing results
+
+### Containerization
+
+- Docker
+- Docker Compose
+- Separate backend and frontend containers
+- Container image management using Amazon ECR
+
+### AWS Deployment
+
+- Amazon ECR
+- AWS App Runner
+- AWS CloudFormation
+- Amazon ECS
+- Amazon EKS
+- Kubernetes
+- Kubernetes Services
+- Kubernetes Deployments
+- Kubernetes HPA
+- Elastic Load Balancing / Application Load Balancers
+
+### Testing and CI/CD
+
+- Pytest
+- 16 automated tests
+- Test coverage improved to approximately 84%
+- GitHub Actions CI pipeline
 
 ---
 
-## Technology Stack
-
-| Category             | Tools / Technologies                        |
-| -------------------- | ------------------------------------------- |
-| Programming Language | Python                                      |
-| API Framework        | FastAPI                                     |
-| API Server           | Uvicorn                                     |
-| OCR Engine           | Tesseract OCR                               |
-| Image Processing     | OpenCV, Pillow                              |
-| PDF Processing       | PyMuPDF, pdf2image, Poppler                 |
-| Cloud Services       | AWS ECR, AWS App Runner, AWS CloudFormation |
-| Containerization     | Docker                                      |
-| Testing              | Pytest, pytest-cov, pytest-benchmark        |
-| Automation           | GitHub Actions                              |
-| Version Control      | Git, GitHub                                 |
-
----
-
-## Final Project Structure
+# Application Workflow
 
 ```text
-ai-ml-internship/
-│
-├── app/
-│   ├── main.py
-│   ├── api/
-│   ├── services/
-│   ├── utils/
-│   └── core/
-│
-├── cloudformation/
-│   ├── ecr.yaml
-│   └── apprunner-template.yaml
-│
-├── .github/
-│   └── workflows/
-│
-├── old_code/
-├── sample_files/
-├── screenshots/
-├── tests/
-│
-├── Dockerfile
-├── .dockerignore
-├── .gitignore
-├── pytest.ini
-├── requirements.txt
-├── run.py
-├── scheduler.py
-└── README.md
+                 User
+                  |
+                  v
+        React + Vite Frontend
+                  |
+                  v
+             FastAPI API
+                  |
+       +----------+----------+
+       |          |          |
+       v          v          v
+      PDF       Image      Video
+       |          |          |
+       +----------+----------+
+                  |
+                  v
+       OpenCV + PyTesseract
+                  |
+                  v
+          Extracted Text
+                  |
+                  v
+          API / UI Response
 ```
 
-### Folder Explanation
-
-| Folder / File        | Purpose                                     |
-| -------------------- | ------------------------------------------- |
-| `app/`               | Final FastAPI application package           |
-| `app/api/`           | API route files                             |
-| `app/services/`      | OCR processing logic                        |
-| `app/utils/`         | Helper functions                            |
-| `cloudformation/`    | AWS deployment templates                    |
-| `.github/workflows/` | GitHub Actions workflow files               |
-| `old_code/`          | Earlier development versions and trial code |
-| `sample_files/`      | Sample PDFs, images, or videos for testing  |
-| `screenshots/`       | Output and deployment proof screenshots     |
-| `tests/`             | Test cases for the application              |
-| `Dockerfile`         | Docker image configuration                  |
-| `scheduler.py`       | Earlier S3 automation scheduler task        |
-| `requirements.txt`   | Python dependencies                         |
+For cloud deployment, the application can be accessed through the corresponding AWS deployment endpoint or load balancer.
 
 ---
 
-## System Requirements
+# System Architecture
 
-Before running this project, the following software should be installed:
+```text
+                        +----------------------+
+                        |        User          |
+                        +----------+-----------+
+                                   |
+                                   v
+                        +----------------------+
+                        | React + Vite Frontend|
+                        +----------+-----------+
+                                   |
+                                   v
+                        +----------------------+
+                        |   FastAPI Backend    |
+                        +----------+-----------+
+                                   |
+             +---------------------+---------------------+
+             |                     |                     |
+             v                     v                     v
+       PDF Processing        Image Processing      Video Processing
+             |                     |                     |
+             +---------------------+---------------------+
+                                   |
+                                   v
+                         OpenCV + PyTesseract
+                                   |
+                                   v
+                            Extracted Text
 
-### Required Installations
 
-1. **Python 3.10 or above**
-2. **Tesseract OCR**
-3. **Poppler**
-4. **Docker Desktop**
-5. **AWS CLI**
-6. **Git**
-
----
-
-## Local Setup
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/your-username/ai-ml-internship.git
-cd ai-ml-internship
-```
-
-Replace `your-username` with your actual GitHub username.
-
----
-
-### 2. Create and Activate Virtual Environment
-
-For Windows PowerShell:
-
-```powershell
-python -m venv .venv
-.venv\Scripts\activate
+       Docker
+          |
+          v
+     Amazon ECR
+          |
+    +-----+------------------+
+    |                        |
+    v                        v
+AWS App Runner          AWS ECS / AWS EKS
+                             |
+                    +--------+--------+
+                    |                 |
+                    v                 v
+             Load Balancer       Kubernetes HPA
 ```
 
 ---
 
-### 3. Install Dependencies
+# Technology Stack
 
-```bash
-pip install --upgrade pip
-pip install -r requirements.txt
-```
+| Category | Technology |
+|---|---|
+| Programming Language | Python |
+| Backend Framework | FastAPI |
+| OCR | PyTesseract |
+| Image Processing | OpenCV |
+| Frontend | React |
+| Frontend Build Tool | Vite |
+| API Documentation | Swagger UI / OpenAPI |
+| Testing | Pytest |
+| Code Coverage | Coverage.py / Pytest Coverage |
+| Containerization | Docker |
+| Local Orchestration | Docker Compose |
+| Source Control | Git / GitHub |
+| CI/CD | GitHub Actions |
+| Container Registry | Amazon ECR |
+| Application Deployment | AWS App Runner |
+| Infrastructure as Code | AWS CloudFormation |
+| Container Orchestration | Amazon ECS |
+| Kubernetes | Amazon EKS |
+| Kubernetes CLI | kubectl |
+| EKS CLI | eksctl |
+| Load Balancing | AWS Elastic Load Balancing / ALB |
+| Autoscaling | Kubernetes HPA |
+| Cloud Region | AWS `ap-south-1` |
 
 ---
 
-### 4. Run the FastAPI Application
+# Project Structure
+
+A simplified project structure is:
+
+```text
+## Project Structure
+
+```text
+AI-ML-INTERNSHIP/
+├── app/                         # FastAPI backend
+├── frontend/                    # React + Vite frontend
+├── cloudformation/              # AWS CloudFormation templates
+├── final_deployment_screenshots/ # Deployment screenshots
+├── requirements.txt             # Python dependencies
+├── Dockerfile                   # Backend Docker configuration
+├── docker-compose.yml            # Local multi-container setup
+└── README.md                    # Project documentation
+```
+
+> The screenshot folder in this repository is named `final_deployment_screenshots`. The image paths in this README are therefore relative paths from the repository root.
+
+---
+
+# Backend Application
+
+The backend is implemented using **FastAPI**.
+
+The main FastAPI application is located in:
+
+```text
+app/main.py
+```
+
+The application provides:
+
+- API routing
+- CORS configuration
+- Health checking
+- PDF processing
+- Image processing
+- Video processing
+- Swagger/OpenAPI documentation
+
+The FastAPI application can be started locally using:
 
 ```bash
 uvicorn app.main:app --reload
 ```
 
-Or:
-
-```bash
-python run.py
-```
-
----
-
-### 5. Open Application Locally
-
-Root endpoint:
+The backend is available locally at:
 
 ```text
-http://127.0.0.0:8000
+http://localhost:8000
 ```
 
-Swagger UI:
+---
+
+# Frontend Application
+
+The frontend was implemented using **React + Vite**.
+
+The frontend provides a user-friendly interface for:
+
+- Uploading images
+- Uploading PDFs
+- Uploading videos
+- Sending files to the FastAPI backend
+- Displaying the OCR processing result
+
+The frontend can be started locally using the appropriate npm commands:
+
+```bash
+npm install
+npm run dev
+```
+
+The Vite development server normally runs at:
 
 ```text
-http://127.0.0.0:8000/docs
+http://localhost:5173
+```
+
+The frontend was also tested using a Docker-based setup.
+
+---
+
+# OCR Processing
+
+## PDF Processing
+
+The PDF processing functionality supports:
+
+- Digital PDF documents
+- Scanned PDF documents
+
+The application processes the document and extracts text using OCR where required.
+
+Endpoint:
+
+```text
+POST /api/pdf/process
 ```
 
 ---
 
-## API Endpoints
+## Image Processing
 
-| Method | Endpoint             | Description                       |
-| ------ | -------------------- | --------------------------------- |
-| GET    | `/`                  | Checks whether the API is running |
-| GET    | `/api/health`        | Health check endpoint             |
-| POST   | `/api/pdf/process`   | Extracts text from PDF files      |
-| POST   | `/api/image/process` | Extracts text from image files    |
-| POST   | `/api/video/process` | Extracts text from video files    |
+Image files can be uploaded directly for OCR processing.
 
----
+The application uses OpenCV for image processing and PyTesseract for text extraction.
 
-## Swagger UI Testing
+Endpoint:
 
-Swagger UI is used to test all API endpoints directly from the browser.
-
-Steps:
-
-1. Start the FastAPI server.
-2. Open `http://127.0.0.1:8000/docs`.
-3. Select the required endpoint.
-4. Click **Try it out**.
-5. Upload a PDF, image, or video file.
-6. Click **Execute**.
-7. View the extracted text response.
-
-### Local Swagger UI Screenshot
-
-
-
-![Local Swagger UI](./final_deployment_screenshots/01_docker_running_local.png)
-
+```text
+POST /api/image/process
+```
 
 ---
 
-## Docker Setup
+## Video Processing
 
-Docker is used to containerize the FastAPI OCR application so that it can run consistently in any environment.
+Video files are processed frame-by-frame.
 
-### 1. Build Docker Image
+OpenCV is used to extract frames and PyTesseract is used to perform OCR on suitable frames.
+
+Endpoint:
+
+```text
+POST /api/video/process
+```
+
+---
+
+# API Endpoints
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| GET | `/` | Application/root endpoint |
+| GET | `/api/health` | Health check |
+| POST | `/api/pdf/process` | Process PDF files |
+| POST | `/api/image/process` | Process image files |
+| POST | `/api/video/process` | Process video files |
+
+---
+
+# Swagger UI
+
+FastAPI automatically provides interactive API documentation.
+
+After starting the backend, open:
+
+```text
+http://localhost:8000/docs
+```
+
+Swagger UI allows the APIs to be tested directly from the browser.
+
+### Swagger UI
+
+![Swagger UI](./final_deployment_screenshots/06-swagger-ui.jpeg)
+
+---
+
+# Local Development
+
+## Prerequisites
+
+Install the following:
+
+- Python 3.x
+- Node.js and npm
+- Git
+- Docker Desktop
+- AWS CLI
+- kubectl
+- eksctl
+
+---
+
+## Clone the Repository
 
 ```bash
-docker build -t fastapi-ocr-app .
+git clone <YOUR_GITHUB_REPOSITORY_URL>
+cd AI-ML-INTERNSHIP
 ```
 
-### 2. Run Docker Container
+---
+
+## Backend Setup
+
+Create and activate a virtual environment:
+
+### Windows
 
 ```bash
-docker run -p 8000:8000 fastapi-ocr-app
+python -m venv venv
+venv\Scripts\activate
 ```
 
-### 3. Open Dockerized Application
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Run the FastAPI application:
+
+```bash
+uvicorn app.main:app --reload
+```
+
+Open:
 
 ```text
 http://localhost:8000
@@ -241,406 +477,825 @@ Swagger UI:
 http://localhost:8000/docs
 ```
 
-### Docker Running Screenshot
-
-
-![Docker Running](./final_deployment_screenshots/08_swagger_UI_output.jpeg)
-
-
 ---
 
-## AWS Deployment Overview
+## Frontend Setup
 
-The final application was deployed on AWS using the following flow:
+Navigate to the frontend:
 
-```text
-FastAPI Application
-        ↓
-Docker Image
-        ↓
-Amazon ECR
-        ↓
-AWS App Runner
-        ↓
-Public API URL
+```bash
+cd frontend
 ```
 
-CloudFormation was used to automate the creation and deployment of AWS resources.
+Install dependencies:
 
----
-
-## AWS Services Used
-
-### 1. Amazon ECR
-
-Amazon Elastic Container Registry was used to store the Docker image of the FastAPI OCR application.
-
-### 2. AWS App Runner
-
-AWS App Runner was used to deploy and run the containerized FastAPI application as a public web service.
-
-### 3. AWS CloudFormation
-
-CloudFormation templates were used to define and create AWS resources in an automated and repeatable way.
-
----
-
-## AWS Deployment Steps
-
-### Step 1: Create ECR Repository
-
-CloudFormation template used:
-
-```text
-cloudformation/ecr.yaml
+```bash
+npm install
 ```
 
-Command:
+Start the development server:
 
-```powershell
-aws cloudformation deploy --template-file cloudformation/ecr.yaml --stack-name fastapi-ocr-ecr-stack --region ap-south-1
-```
-
-This creates the ECR repository:
-
-```text
-fastapi-ocr-app
+```bash
+npm run dev
 ```
 
 ---
 
-### Step 2: Build Docker Image
+# Local Docker Execution
 
-```powershell
+The application was successfully tested using Docker.
+
+The local Docker environment contains the application containers required for running the project.
+
+![Docker Running Locally](./final_deployment_screenshots/01_docker_running_local.png)
+
+---
+
+# Dockerization
+
+Docker was used to package the application into portable containers.
+
+The project includes separate container images for the backend and frontend.
+
+Docker images were built locally and then pushed to Amazon ECR for cloud deployment.
+
+Useful commands:
+
+```bash
 docker build -t fastapi-ocr-app .
 ```
 
----
+Run the backend container:
 
-### Step 3: Login Docker to ECR
-
-```powershell
-aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 861638088392.dkr.ecr.ap-south-1.amazonaws.com
+```bash
+docker run -p 8000:8000 fastapi-ocr-app
 ```
 
----
+List Docker images:
 
-### Step 4: Tag Docker Image
-
-```powershell
-docker tag fastapi-ocr-app:latest 861638088392.dkr.ecr.ap-south-1.amazonaws.com/fastapi-ocr-app:latest
+```bash
+docker images
 ```
 
+### Docker Images
+
+![Docker Images](./final_deployment_screenshots/07-docker-images.png)
+
 ---
 
-### Step 5: Push Docker Image to ECR
+# Docker Compose
 
-```powershell
-docker push 861638088392.dkr.ecr.ap-south-1.amazonaws.com/fastapi-ocr-app:latest
+Docker Compose was used to run the frontend and backend together during local development.
+
+Start the application:
+
+```bash
+docker compose up --build
 ```
 
-After this step, the Docker image is available in Amazon ECR with the tag:
+Stop the application:
+
+```bash
+docker compose down
+```
+
+The local setup allowed the frontend and backend to communicate through the configured CORS settings.
+
+---
+
+# Frontend CORS Configuration
+
+The FastAPI application was configured with CORS middleware to allow communication from the local React/Vite frontend.
+
+The development configuration included origins such as:
 
 ```text
-latest
+http://localhost:3000
+http://127.0.0.1:3000
+http://localhost:5173
+http://127.0.0.1:5173
 ```
 
-### ECR Image Screenshot
-
-![ECR Latest Image](./final_deployment_screenshots/02_ecr_latest_image.jpeg)
-
+This resolved browser CORS issues encountered during frontend-backend integration.
 
 ---
 
-### Step 6: Deploy App Runner Using CloudFormation
+# Testing
 
-CloudFormation template used:
+Automated tests were implemented using **Pytest**.
 
-```text
-cloudformation/apprunner-template.yaml
-```
-
-Command:
-
-```powershell
-aws cloudformation deploy --template-file cloudformation/apprunner-template.yaml --stack-name fastapi-ocr-apprunner-stack --region ap-south-1 --capabilities CAPABILITY_NAMED_IAM --parameter-overrides ImageIdentifier=861638088392.dkr.ecr.ap-south-1.amazonaws.com/fastapi-ocr-app:latest
-```
-
-This creates the AWS App Runner service and deploys the FastAPI OCR application.
-
----
-
-### Step 7: Get App Runner Public URL
-
-```powershell
-aws cloudformation describe-stacks --stack-name fastapi-ocr-apprunner-stack --region ap-south-1 --query "Stacks[0].Outputs[0].OutputValue" --output text --no-cli-pager
-```
-
-Deployed URL:
+The test suite collected:
 
 ```text
-https://fky2gyewc2.ap-south-1.awsapprunner.com
+16 tests
 ```
 
-Swagger UI:
+The tests were successfully executed and passed.
+
+Code coverage was initially around:
 
 ```text
-https://fky2gyewc2.ap-south-1.awsapprunner.com/docs
+48%
 ```
 
----
-
-## Deployment Verification
-
-The deployed application returned the following success response:
-
-```json
-{
-  "status": "success",
-  "message": "FastAPI OCR project is running successfully"
-}
-```
-
-### Deployed Application Screenshot
-
-
-![Deployed App Success](./final_deployment_screenshots/03_deployed_app_success.jpeg)
-
-
-### Deployed Swagger UI Screenshot
-
-
-![Deployed Swagger UI](./final_deployment_screenshots/01_docker_running_local.png)
-![Deployed Swagger UI and OCR API Outputs](./final_deployment_screenshots/08_swagger_UI_output.jpeg)
-
-
----
-
-## CloudFormation Verification
-
-The App Runner CloudFormation stack was successfully created.
-
-Stack name:
+and was subsequently improved to approximately:
 
 ```text
-fastapi-ocr-apprunner-stack
+84%
 ```
 
-Final status:
-
-```text
-CREATE_COMPLETE
-```
-
-### CloudFormation Stack Screenshot
-
-
-![CloudFormation CREATE_COMPLETE](./final_deployment_screenshots/05_cloudformation_create_complete.jpeg)
-
-
-### CloudFormation Output Screenshot
-
-
-![CloudFormation Output URL](./final_deployment_screenshots/06_cloudformation_outputs_url.jpeg)
-
-
----
-
-## App Runner Verification
-
-The AWS App Runner service was created successfully and the application was publicly accessible through the App Runner service URL.
-
-Service name:
-
-```text
-fastapi-ocr-app-runner
-```
-
-### App Runner Running Screenshot
-
-
-![App Runner Running](./final_deployment_screenshots/07_apprunner_running_status.jpeg)
-
-
----
-
-## Testing
-
-The project supports Pytest for unit testing and coverage checking.
-
-### Run Tests
+Run the tests using:
 
 ```bash
 pytest
 ```
 
-### Run Tests with Coverage
+Run with coverage:
 
 ```bash
 pytest --cov=app
 ```
 
-### Generate HTML Coverage Report
+---
+
+# CI/CD
+
+A GitHub Actions workflow was configured to automate the testing process.
+
+The CI workflow provides automated validation of the application whenever changes are pushed to the repository.
+
+Typical CI workflow:
+
+```text
+Developer Push
+      |
+      v
+GitHub Repository
+      |
+      v
+GitHub Actions
+      |
+      v
+Install Dependencies
+      |
+      v
+Run Pytest
+      |
+      v
+Generate Coverage
+      |
+      v
+Build / Validation
+```
+
+---
+
+# AWS Deployment
+
+The application was deployed and validated using multiple AWS services.
+
+The primary AWS region used throughout the deployment was:
+
+```text
+ap-south-1
+```
+
+This is the Mumbai AWS region.
+
+The deployment included:
+
+```text
+Docker
+   |
+   v
+Amazon ECR
+   |
+   +----------------------+
+   |                      |
+   v                      v
+AWS App Runner        ECS / EKS
+                          |
+                          v
+                    Load Balancer
+                          |
+                          v
+                     Application
+```
+
+---
+
+# Amazon ECR
+
+Amazon Elastic Container Registry (ECR) was used to store the Docker container images.
+
+The primary ECR repository used for the backend application was:
+
+```text
+fastapi-ocr-app
+```
+
+The Docker image was built locally and pushed to ECR.
+
+Typical workflow:
 
 ```bash
-pytest --cov=app --cov-report=html
+aws configure
 ```
 
-The generated report is available inside:
+Authenticate Docker with ECR:
 
-```text
-htmlcov/index.html
+```bash
+aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin <AWS_ACCOUNT_ID>.dkr.ecr.ap-south-1.amazonaws.com
 ```
+
+Build the image:
+
+```bash
+docker build -t fastapi-ocr-app .
+```
+
+Tag the image:
+
+```bash
+docker tag fastapi-ocr-app:latest <AWS_ACCOUNT_ID>.dkr.ecr.ap-south-1.amazonaws.com/fastapi-ocr-app:latest
+```
+
+Push the image:
+
+```bash
+docker push <AWS_ACCOUNT_ID>.dkr.ecr.ap-south-1.amazonaws.com/fastapi-ocr-app:latest
+```
+
+### ECR Repository
+
+![ECR Repositories](./final_deployment_screenshots/08-ecr-repositories.jpeg)
+
+### Latest ECR Image
+
+![Latest ECR Image](./final_deployment_screenshots/02_ecr_latest_image.jpeg)
 
 ---
 
-## GitHub Actions
+# AWS App Runner
 
-GitHub Actions is used to automatically check the project when code is pushed to GitHub.
+AWS App Runner was used to deploy the containerized FastAPI application.
 
-The workflow is available inside:
+The deployment used the ECR container image as the application source.
 
-```text
-.github/workflows/
-```
+The App Runner deployment was successfully created and reached a running state.
 
-It helps automate:
+![AWS App Runner Running Status](./final_deployment_screenshots/07_apprunner_running_status.jpeg)
 
-* Dependency installation
-* Test execution
-* Build verification
-* Continuous integration checks
+The deployed application was tested after deployment to verify that the application was reachable and functional.
+
+![Deployed Application Success](./final_deployment_screenshots/03_deployed_app_success.jpeg)
 
 ---
 
-## Troubleshooting Notes
+# AWS CloudFormation
 
-### 1. Invalid Template Path
+AWS CloudFormation was used for infrastructure provisioning.
 
-If the following error appears:
+CloudFormation helped automate the creation of required AWS resources instead of configuring every resource manually.
 
-```text
-Invalid template path
-```
-
-Check whether the template file exists:
-
-```powershell
-dir cloudformation
-```
-
-Use the correct file name:
+Important CloudFormation stack names used during the project included:
 
 ```text
-cloudformation/apprunner-template.yaml
+fastapi-ocr-ecr-stack
+fastapi-ocr-apprunner-stack
 ```
+
+The CloudFormation deployment was successfully completed.
+
+![CloudFormation Stack Creation](./final_deployment_screenshots/05_cloudformation_create_complete.jpeg)
+
+CloudFormation outputs were used to retrieve deployment-related URLs and resource information.
+
+![CloudFormation Outputs](./final_deployment_screenshots/06_cloudformation_outputs_url.jpeg)
+
+A JSON output file was also generated/downloaded during the deployment process.
+
+![CloudFormation JSON Output](./final_deployment_screenshots/05-json-download.png)
 
 ---
 
-### 2. Stack in ROLLBACK_COMPLETE State
+# Application Testing Screenshots
 
-If CloudFormation shows:
+## Home Page
 
-```text
-Stack is in ROLLBACK_COMPLETE state and cannot be updated
-```
-
-Delete the failed stack:
-
-```powershell
-aws cloudformation delete-stack --stack-name fastapi-ocr-apprunner-stack --region ap-south-1
-```
-
-Then deploy again.
+![Application Home Page](./final_deployment_screenshots/01-home-page.jpeg)
 
 ---
 
-### 3. Parameter Value Missing
+## Image Upload
 
-If this error appears:
-
-```text
-Parameters: [ImageIdentifier] must have values
-```
-
-Use the correct parameter name:
-
-```text
-ImageIdentifier
-```
+![Image Upload](./final_deployment_screenshots/02-image-upload.jpeg)
 
 ---
 
-### 4. Port Mismatch
+## PDF Upload
 
-The application should run on port:
+![PDF Upload](./final_deployment_screenshots/03-pdf-upload.jpeg)
+
+---
+
+## Video Upload
+
+![Video Upload](./final_deployment_screenshots/04-video-upload.jpeg)
+
+---
+
+## Swagger API Output
+
+![Swagger API Output](./final_deployment_screenshots/08_swagger_UI_output.jpeg)
+
+---
+
+# AWS ECS Deployment
+
+Amazon Elastic Container Service (ECS) was used to deploy the containerized application in an ECS cluster.
+
+The ECS environment was configured using EC2-backed container instances.
+
+The ECS cluster used during the project was:
+
+```text
+ocr-ecs-cluster
+```
+
+The backend task definition was:
+
+```text
+ocr-backend-task
+```
+
+The container exposed:
 
 ```text
 8000
 ```
 
-The Dockerfile and App Runner template should both use port `8000`.
+The ECS deployment included:
+
+- ECS Cluster
+- EC2 container instances
+- Task Definition
+- ECS Service
+- Backend container
+- Target Group
+- Application Load Balancer
 
 ---
 
-## Security Notes
+## ECS Cluster
 
-Do not push secret or generated files to GitHub.
+![ECS Cluster](./final_deployment_screenshots/09-ecs-cluster.jpeg)
 
-Make sure the following files and folders are ignored:
+---
+
+## ECS Services
+
+![ECS Services](./final_deployment_screenshots/10-ecs-services.jpeg)
+
+---
+
+# ECS Load Balancing
+
+An Application Load Balancer was configured for the ECS backend service.
+
+The backend target group was configured to forward traffic to the ECS container instances.
+
+The target group used during the deployment was:
 
 ```text
-.env
-.venv/
-AWS credentials
-Access keys
-Secret keys
-__pycache__/
-.pytest_cache/
-.coverage
-htmlcov/
-temp/
+backend-target-group
 ```
 
----
-
-## Cleanup After Verification
-
-AWS App Runner can create charges while it is running. After mentor verification or final submission, delete the deployed resources.
-
-### Delete App Runner Stack
-
-```powershell
-aws cloudformation delete-stack --stack-name fastapi-ocr-apprunner-stack --region ap-south-1
-```
-
-### Delete ECR Images
-
-Go to:
+The Application Load Balancer used during the deployment was:
 
 ```text
-AWS Console → ECR → Repositories → fastapi-ocr-app → Images → Delete
+backend-alb
 ```
 
-### Delete ECR Stack
+The load balancer was configured as an internet-facing Application Load Balancer.
 
-```powershell
-aws cloudformation delete-stack --stack-name fastapi-ocr-ecr-stack --region ap-south-1
+---
+
+# AWS EKS Deployment
+
+Amazon Elastic Kubernetes Service (EKS) was used to deploy the application using Kubernetes.
+
+The EKS cluster created for the project was:
+
+```text
+ocr-eks-cluster
+```
+
+AWS region:
+
+```text
+ap-south-1
+```
+
+Kubernetes version:
+
+```text
+1.34
+```
+
+The cluster was created using `eksctl`.
+
+The command used to create the cluster was:
+
+```bash
+eksctl create cluster \
+  --name ocr-eks-cluster \
+  --region ap-south-1 \
+  --nodegroup-name workers \
+  --node-type t3.small \
+  --nodes 2 \
+  --nodes-min 2 \
+  --nodes-max 4
+```
+
+The cluster used a managed node group named:
+
+```text
+workers
+```
+
+Initial node configuration:
+
+```text
+2 x t3.small
+```
+
+Node scaling range:
+
+```text
+Minimum: 2
+Maximum: 4
 ```
 
 ---
 
+## EKS Cluster
 
-## Final Summary
+![EKS Cluster](./final_deployment_screenshots/11-eks-cluster.jpeg)
 
-This project demonstrates the complete workflow of building and deploying an OCR-based FastAPI application. It includes OCR processing, API development, Docker containerization, AWS ECR image storage, AWS App Runner deployment, and CloudFormation-based infrastructure automation. The final deployed application is accessible through a public App Runner URL and can be tested using Swagger UI.
+---
 
+# Kubernetes Deployment
 
-## Author
+The application was deployed to EKS using Kubernetes manifests.
 
-**Vedanti A Hattarki**  
-AI/ML Intern  
+The Kubernetes deployment resources define:
 
-This project was developed as part of an AI/ML internship, focusing on OCR-based text extraction, FastAPI API development, Docker containerization, and AWS App Runner deployment using CloudFormation.
+- Container image
+- Number of replicas
+- Container ports
+- Resource configuration
+- Environment configuration
+- Application deployment behavior
 
-GitHub: [VedantiAHattarki](https://github.com/VedantiAHattarki)
+Kubernetes deployments were verified using:
+
+```bash
+kubectl get deployments
+```
+
+### Kubernetes Deployments
+
+![Kubernetes Deployments](./final_deployment_screenshots/12-kubectl-deployments.png)
+
+---
+
+# Kubernetes Services
+
+Kubernetes Services were configured to expose the deployed application.
+
+Services were verified using:
+
+```bash
+kubectl get services
+```
+
+### Kubernetes Services
+
+![Kubernetes Services](./final_deployment_screenshots/13-kubectl-services.png)
+
+---
+
+# Horizontal Pod Autoscaling
+
+Kubernetes Horizontal Pod Autoscaler (HPA) was configured to provide automatic scaling of application pods based on resource utilization.
+
+HPA can increase or decrease the number of running pods according to the configured scaling policy.
+
+The HPA configuration was verified using:
+
+```bash
+kubectl get hpa
+```
+
+### Kubernetes HPA
+
+![Kubernetes HPA](./final_deployment_screenshots/14-kubectl-hpa.png)
+
+---
+
+# Elastic Load Balancing
+
+A load balancer was configured to provide external access to the deployed application.
+
+The load-balancing architecture is:
+
+```text
+                     Internet
+                         |
+                         v
+              Application Load Balancer
+                         |
+              +----------+----------+
+              |                     |
+              v                     v
+          Backend Pod           Backend Pod
+              |                     |
+              +----------+----------+
+                         |
+                         v
+                  OCR Processing
+```
+
+The load balancer configuration was verified after the Kubernetes deployment.
+
+### Load Balancer
+
+![Load Balancer](./final_deployment_screenshots/15-load-balancer.jpeg)
+
+---
+
+# Kubernetes Deployment Flow
+
+```text
+Docker Image
+     |
+     v
+Amazon ECR
+     |
+     v
+Amazon EKS
+     |
+     v
+Kubernetes Deployment
+     |
+     v
+Kubernetes Pods
+     |
+     v
+Kubernetes Service
+     |
+     v
+Load Balancer
+     |
+     v
+Application
+```
+
+---
+
+# Deployment Verification
+
+The application was verified at multiple stages.
+
+## Local Verification
+
+The application was tested using:
+
+- Docker
+- Docker Compose
+- FastAPI
+- Swagger UI
+- React frontend
+
+---
+
+## Cloud Verification
+
+The application was verified using:
+
+- Amazon ECR
+- AWS App Runner
+- AWS ECS
+- Amazon EKS
+- Kubernetes Deployments
+- Kubernetes Services
+- Kubernetes HPA
+- Application Load Balancer
+
+---
+
+# Complete Deployment Lifecycle
+
+The overall project deployment lifecycle can be summarized as:
+
+```text
+                    Source Code
+                        |
+                        v
+                     GitHub
+                        |
+                        v
+                 GitHub Actions
+                        |
+                        v
+                     Testing
+                        |
+                        v
+                      Docker
+                        |
+                        v
+                    Amazon ECR
+                        |
+           +------------+-------------+
+           |            |             |
+           v            v             v
+      App Runner       ECS           EKS
+                        |             |
+                        |             v
+                        |       Kubernetes
+                        |             |
+                        |       +-----+------+
+                        |       |            |
+                        |       v            v
+                        |     Service       HPA
+                        |       |            |
+                        |       +-----+------+
+                        |             |
+                        +-------------+
+                                      |
+                                      v
+                               Load Balancer
+                                      |
+                                      v
+                                  Application
+```
+
+---
+
+# Configuration
+
+For local development, configure the required application settings according to the environment.
+
+Do not commit sensitive information such as:
+
+- AWS access keys
+- AWS secret keys
+- Passwords
+- API keys
+- Private credentials
+- Production secrets
+
+Use environment variables or AWS IAM roles wherever possible.
+
+---
+
+# Troubleshooting
+
+### Docker Desktop Engine Issue
+
+During local development on Windows, Docker Desktop initially encountered an issue connecting to its Linux container engine. Since the application uses Linux-based Docker containers, Docker Desktop's Linux container backend must be running correctly.
+
+The issue was resolved by restarting/fixing Docker Desktop and verifying that the Docker engine was running correctly.
+
+Verify Docker:
+
+```bash
+docker version
+
+Verify running containers:
+
+```bash
+docker ps
+```
+
+---
+
+## CORS Error
+
+A CORS issue occurred while connecting the React/Vite frontend with the FastAPI backend.
+
+The issue was resolved by configuring FastAPI `CORSMiddleware` with the frontend development origins.
+
+---
+
+## ECS Listener Port Issue
+
+During the ECS deployment, an incorrect listener port configuration was initially selected.
+
+The listener configuration was corrected and the ECS service was successfully created afterward.
+
+---
+
+## Docker Compose Version Warning
+
+Docker Compose reported that the `version` attribute in the Compose file was obsolete.
+
+This warning does not prevent the containers from being built or started.
+
+---
+
+# AWS Resource Summary
+
+| Resource | Name / Configuration |
+|---|---|
+| AWS Region | `ap-south-1` |
+| ECR Repository | `fastapi-ocr-app` |
+| App Runner Stack | `fastapi-ocr-apprunner-stack` |
+| ECR CloudFormation Stack | `fastapi-ocr-ecr-stack` |
+| ECS Cluster | `ocr-ecs-cluster` |
+| ECS Task Definition | `ocr-backend-task` |
+| ECS Target Group | `backend-target-group` |
+| ECS Load Balancer | `backend-alb` |
+| EKS Cluster | `ocr-eks-cluster` |
+| EKS Node Group | `workers` |
+| Kubernetes Version | `1.34` |
+| EKS Node Type | `t3.small` |
+| Initial EKS Nodes | `2` |
+| EKS Node Range | `2–4` |
+| Backend Container Port | `8000` |
+
+---
+
+# Security and Production Considerations
+
+For production deployment, the following improvements should be considered:
+
+- Use AWS IAM roles instead of long-lived access keys.
+- Store secrets in AWS Secrets Manager or AWS Systems Manager Parameter Store.
+- Use HTTPS/TLS certificates for public endpoints.
+- Restrict security-group inbound rules.
+- Use private subnets for backend workloads where appropriate.
+- Configure CloudWatch logging and monitoring.
+- Add application-level authentication and authorization.
+- Apply resource requests and limits to Kubernetes workloads.
+- Use image scanning for container images.
+- Keep dependencies and base images updated.
+- Configure appropriate backup and retention policies.
+
+---
+
+# Future Enhancements
+
+Potential future improvements include:
+
+- Advanced OCR preprocessing
+- Better handling of low-quality scanned documents
+- Structured extraction of pharmacovigilance case fields
+- Automatic case-data validation
+- Persistent storage of processed cases
+- Authentication and authorization
+- HTTPS with managed certificates
+- CloudWatch monitoring and alerting
+- Centralized application logging
+- CI/CD-based automatic Docker image deployment
+- Kubernetes rolling deployments
+- More advanced autoscaling policies
+- Improved frontend result visualization
+- Support for additional document formats
+
+---
+
+# Conclusion
+
+The **Case Intake Processor** demonstrates an end-to-end implementation of an OCR-based application, beginning with local development and progressing through containerization, automated testing, cloud infrastructure provisioning, container registry management, and multiple AWS deployment environments.
+
+The project covers:
+
+- Python-based OCR processing
+- FastAPI REST API development
+- Swagger API documentation
+- React + Vite frontend development
+- Docker containerization
+- Docker Compose
+- Automated testing with Pytest
+- Approximately 84% test coverage
+- GitHub Actions CI
+- Amazon ECR
+- AWS App Runner
+- AWS CloudFormation
+- Amazon ECS
+- Amazon EKS
+- Kubernetes Deployments
+- Kubernetes Services
+- Kubernetes Horizontal Pod Autoscaling
+- Elastic Load Balancing
+
+This provides practical experience across **AI/ML application development, backend development, frontend integration, containerization, AWS cloud deployment, Kubernetes orchestration, autoscaling, and load balancing**.
+
+---
+
+# Author
+
+**Vedanti A Hattarki**
+

@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.api import routes_health
 from app.api import routes_pdf
@@ -9,7 +10,7 @@ app = FastAPI(
     title="Case Intake Processor",
     description="""
     This project provides OCR APIs for:
-    
+
     - PDF to text extraction
     - Image to text extraction
     - Video to text extraction
@@ -22,6 +23,15 @@ app = FastAPI(
         "displayRequestDuration": True,
         "docExpansion": "none"
     }
+)
+
+# Add CORS (new)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 app.include_router(routes_health.router, prefix="/api", tags=["Health Check"])
