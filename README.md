@@ -254,7 +254,6 @@ AWS App Runner          AWS ECS / AWS EKS
 
 ---
 
-````markdown
 # Project Structure
 
 A simplified project structure is:
@@ -267,7 +266,7 @@ AI-ML-INTERNSHIP/
 ├── final_deployment_screenshots/ # Deployment screenshots
 ├── requirements.txt              # Python dependencies
 ├── Dockerfile                    # Backend Docker configuration
-├── docker-compose.yml             # Local multi-container setup
+├── docker-compose.yml            # Local multi-container setup
 └── README.md                     # Project documentation
 ```
 
