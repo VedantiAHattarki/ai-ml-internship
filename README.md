@@ -254,28 +254,22 @@ AWS App Runner          AWS ECS / AWS EKS
 
 ---
 
+````markdown
 # Project Structure
 
 A simplified project structure is:
 
 ```text
-## Project Structure
-
-```text
 AI-ML-INTERNSHIP/
-├── app/                         # FastAPI backend
-├── frontend/                    # React + Vite frontend
-├── cloudformation/              # AWS CloudFormation templates
+├── app/                          # FastAPI backend
+├── frontend/                     # React + Vite frontend
+├── cloudformation/               # AWS CloudFormation templates
 ├── final_deployment_screenshots/ # Deployment screenshots
-├── requirements.txt             # Python dependencies
-├── Dockerfile                   # Backend Docker configuration
-├── docker-compose.yml            # Local multi-container setup
-└── README.md                    # Project documentation
+├── requirements.txt              # Python dependencies
+├── Dockerfile                    # Backend Docker configuration
+├── docker-compose.yml             # Local multi-container setup
+└── README.md                     # Project documentation
 ```
-
-> The screenshot folder in this repository is named `final_deployment_screenshots`. The image paths in this README are therefore relative paths from the repository root.
-
----
 
 # Backend Application
 
@@ -1172,7 +1166,7 @@ Verify Docker:
 
 ```bash
 docker version
-
+```
 Verify running containers:
 
 ```bash
